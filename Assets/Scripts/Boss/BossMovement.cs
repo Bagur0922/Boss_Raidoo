@@ -7,7 +7,6 @@ public class BossMovement : MonoBehaviour
     Animator anim;
     SpriteRenderer sr;
     Rigidbody2D rb;
-
     public GameObject player;
 
     bool changedir = true;
@@ -21,16 +20,31 @@ public class BossMovement : MonoBehaviour
 
     float distance;
     // Start is called before the first frame update
-    void Start(){
+    void Start()
+    {
+        SoundPlayer.instance.startBGM("Start");
+
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
 
+        StartCoroutine(start());
+
         cool[0] = 1;
     }
-
+    IEnumerator start()
+    {
+        rb.velocity = new Vector2(-1, 0);
+        yield return new WaitForSeconds(1.3f);
+        rb.velocity = new Vector2(0, 0);
+        yield return new WaitForSeconds(1.45f);
+        anim.SetTrigger("intro_end");
+        yield return new WaitForSeconds(4.35f);
+        player.GetComponent<PlayerMovement>().anyaction = true;
+    }
     // Update is called once per frame
-    void Update(){
+    void Update()
+    {
         distance = player.transform.position.x - gameObject.transform.position.x;
         look();
         skill();
@@ -43,24 +57,29 @@ public class BossMovement : MonoBehaviour
             changedir = true;
         }
     }
-    void look(){
-        if(distance > 0 && changedir){
+    void look()
+    {
+        if (distance > 0 && changedir)
+        {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             watchingdir = true;
         }
-        else if(changedir){
+        else if (changedir)
+        {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
             watchingdir = false;
         }
     }
     void skill()
     {
-        if (/*Input.GetKeyDown(KeyCode.A) && */Mathf.Abs(distance) < 5 && ready && cool[0] == 1){
+        if (/*Input.GetKeyDown(KeyCode.A) && */Mathf.Abs(distance) < 5 && ready && cool[0] == 1)
+        {
             ready = false;
             StartCoroutine(thunder());
         }
     }
-    IEnumerator thunder(){
+    IEnumerator thunder()
+    {
         anim.SetTrigger("thunder_start");
         changedir = false;
         yield return new WaitForSeconds(0.375f);
