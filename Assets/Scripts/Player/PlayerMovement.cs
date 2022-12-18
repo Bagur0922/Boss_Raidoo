@@ -11,13 +11,16 @@ public class PlayerMovement : MonoBehaviour
     public int speed = 2;
 
     int xmove; //이동 방향, 오른쪽은 1, 왼쪽은 -1. 오른쪽은 0
+    int AttackXmove; //공격용 이동방향
 
     
     bool canDash = true; //구를 수 있는가
     bool canMove = true; //움직일 수 있는가
     bool canAttack = true; //공격할 수 있는가
-    bool isAttacking = false; //공격하고 있는가
+    bool attackmove = false; //공격하고 있는가
 
+    public bool damge = true; //데미지를 입는가
+    public bool isAttacking = false; //공격하고 있는가
     public bool isDashing = false; //구르고 있는가
     public bool ghosting = false; //잔상 On/Off
     public bool direction = true; //플레이어가 보고 있는  방향
@@ -50,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void move()
     {
-        if (Input.GetKey(KeyCode.LeftArrow) && canMove && !isDashing || isDashing && !direction && canMove || isAttacking && !direction && canMove)
+        if (Input.GetKey(KeyCode.LeftArrow) && canMove && !isDashing && !attackmove || isDashing && !direction && canMove && !attackmove ||AttackXmove == -1 && attackmove)
             //각각 움직일 수 있고 대쉬 불가능한 상태에서 왼쪽을 눌렀는가 // 움직일 수 있는 상태에서 왼쪽을 보고 대쉬 중인가 // 왼쪽을 보고 공격중이고 움직일 수 있는가
         {
             direction = false;
@@ -58,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isWalking", true);
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && canMove && !isDashing || isDashing && direction || isAttacking && !direction && canMove)
+        if (Input.GetKey(KeyCode.RightArrow) && canMove && !isDashing && !attackmove || isDashing && direction && canMove && !attackmove || AttackXmove == 1 && attackmove)
             //왼쪽이랑 동일 오른쪽을 보는가로만 바뀜
         {
             direction = true;
@@ -66,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isWalking", true);
             gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
-        else
+        if(!canMove || !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) && !isDashing)
         {
             xmove = 0;
             anim.SetBool("isWalking", false);
@@ -94,20 +97,25 @@ public class PlayerMovement : MonoBehaviour
             {
                 if(xmove != 0)
                 {
-                    isAttacking = true;
+                    attackmove = true;
+                    if (Input.GetKey(KeyCode.LeftArrow))
+                    {
+                        AttackXmove = -1;
+                    }
+                    else if(Input.GetKey(KeyCode.RightArrow))
+                    {
+                        AttackXmove = 1;
+                    }
                     canAttack = false;
                     speed = 10;
                     anim.SetTrigger("Attack");
                     StartCoroutine(ghost(0.5f));
-                    isAttacking = true;
                     StartCoroutine(comeback(0.5f));
                 }
                 else
                 {
-                    isAttacking = true;
                     canAttack = false;
                     anim.SetTrigger("Attack");
-                    //StartCoroutine(ghost(0.5f));
                     canMove = false;
                     StartCoroutine(comeback(0.5f));
                 }
@@ -119,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetTrigger("Damaged");
         canMove = false;
         canDash = false;
-        isAttacking = false;
+        canAttack = false;
         StartCoroutine(comeback(0.75f));
         yield return null;
     }
@@ -143,10 +151,10 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(time);
         if (alback == current)
         {
+            attackmove = false;
             canAttack = true;
             canDash = true;
             speed = 7;
-            isAttacking = false;
             isDashing = false;
             canMove = true;
             alghost = 0;

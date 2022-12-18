@@ -4,9 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - HitBox
   - Boss
   - Barrier
+  - p_HitBox
+  - p_AttackBox
+  - b_HitBox
+  - b_AttackBox
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - UI
   - Boss
   - Barrier
-  - HitBox
+  - 
   - 
   - 
   - 
