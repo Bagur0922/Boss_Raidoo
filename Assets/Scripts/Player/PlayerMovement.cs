@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody2D rb;
     Animator anim;
+    SpriteRenderer sr;
+
+    [SerializeField] Sprite fly;
 
     public int speed = 2;
 
@@ -34,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
+        sr = gameObject.GetComponent<SpriteRenderer>();
         StartCoroutine(comeback(0));
     }
 
@@ -44,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+        //touchingwall = false;
         move();
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -166,5 +171,35 @@ public class PlayerMovement : MonoBehaviour
         }
 
         yield return null;
+    }
+    public IEnumerator counter()
+    {
+        anyaction = false;
+        rb.velocity = new Vector2(0, 0);
+        yield return new WaitForSeconds(2/11f);
+
+        sr.enabled = false;
+
+        yield return new WaitForSeconds(9/11f);
+
+        sr.enabled = true;
+        anim.SetTrigger("counter");
+
+        if (direction)
+        {
+            rb.velocity = new Vector2(-20, 0);
+        }
+        else
+        {
+            rb.velocity = new Vector2(20, 0);
+        }
+
+        yield return new WaitWhile(() => transform.position.x > -8  && transform.position.x < 8);
+
+        rb.velocity = new Vector2(0, 0);
+        
+        anim.SetTrigger("fly_down");
+        yield return new WaitForSeconds(11 / 12f);
+        anyaction = true;
     }
 }

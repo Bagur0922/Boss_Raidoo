@@ -107,4 +107,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: playBGMwithString
+    data: Start
+    objectReferenceParameter: {fileID: 102900000, guid: e573508477ab9874e86f84685b9ecfde, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

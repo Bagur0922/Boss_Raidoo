@@ -21,6 +21,7 @@ public class p_HitBox : MonoBehaviour
             StartCoroutine(player.GetComponent<PlayerMovement>().damaged());
         }
     }
+
     // Update is called once per frame
     void Update()
     {

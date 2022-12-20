@@ -9,37 +9,38 @@ public class BossMovement : MonoBehaviour
     Rigidbody2D rb;
     public GameObject player;
 
-    bool changedir = true;
-    bool watchingdir = false;
-    bool ready = true;
+    int xmove;
 
+    bool changedir = true;
+
+    public bool ready = true;
     public bool attacking = true;
     public bool damage = true;
+    public bool ghosting = false;
+    public bool direction = false;
+    public bool counteren = true;
 
-    [SerializeField] public int[] cool;
+    [SerializeField] public int[] cool; //1은 사용 가능, 0은 쿨타임중. 0은 벽력일섬, 1은 구르기
 
     float distance;
+    float speed;
     // Start is called before the first frame update
     void Start()
     {
-        SoundPlayer.instance.startBGM("Start");
+        //SoundPlayer.instance.startBGM("Start");
 
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
 
         StartCoroutine(start());
-
-        cool[0] = 1;
     }
     IEnumerator start()
     {
         rb.velocity = new Vector2(-1, 0);
         yield return new WaitForSeconds(1.3f);
         rb.velocity = new Vector2(0, 0);
-        yield return new WaitForSeconds(1.45f);
-        anim.SetTrigger("intro_end");
-        yield return new WaitForSeconds(4.35f);
+        yield return new WaitForSeconds(2.8f);
         player.GetComponent<PlayerMovement>().anyaction = true;
     }
     // Update is called once per frame
@@ -62,28 +63,66 @@ public class BossMovement : MonoBehaviour
         if (distance > 0 && changedir)
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
-            watchingdir = true;
+            direction = true;
         }
         else if (changedir)
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
-            watchingdir = false;
+            direction = false;
         }
     }
     void skill()
     {
-        if (/*Input.GetKeyDown(KeyCode.A) && */Mathf.Abs(distance) < 5 && ready && cool[0] == 1)
+        if (Mathf.Abs(distance) < 5 && ready && cool[0] == 1)
         {
             ready = false;
             StartCoroutine(thunder());
         }
+        else if (Mathf.Abs(distance) < 2 && ready && cool[1] == 1)
+        {
+            changedir = false;
+            ready = false;
+            StartCoroutine(roll());
+        }
+    }
+    IEnumerator roll()
+    {
+        if(cool[1] == 1)
+        {
+            ghosting = true;
+            changedir = false;
+            cool[1] = 0;
+            damage = false;
+            anim.SetTrigger("roll");
+            speed = 14;
+            if (!direction)
+            {
+                gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                xmove = -1;
+            }
+            if (direction)
+            {
+                gameObject.transform.localScale = new Vector3(1, 1, 1);
+                xmove = 1;
+            }
+            Vector2 getvel = new Vector2(xmove * speed, 0);
+            rb.velocity = getvel;
+            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(cooldown(1, 2.5f));
+            rb.velocity = new Vector2(0, 0);
+            speed = 7;
+            changedir = true;
+            ghosting = false;
+            ready = true;
+        }
+        
     }
     IEnumerator thunder()
     {
         anim.SetTrigger("thunder_start");
         changedir = false;
         yield return new WaitForSeconds(0.375f);
-        if (watchingdir)
+        if (direction)
         {
             rb.AddForce(Vector2.right * 120f, ForceMode2D.Impulse);
         }
@@ -113,6 +152,17 @@ public class BossMovement : MonoBehaviour
         ready = true;
         changedir = true;
         yield return null;
+    }
+    public IEnumerator counter()
+    {
+        anim.SetTrigger("counter");
+        rb.velocity = new Vector2(0, 0);
+        ready = false;
+        ghosting = false;
+        changedir = false;
+        yield return new WaitWhile(() => !player.GetComponent<PlayerMovement>().anyaction);
+        ready = true;
+        changedir = true;
     }
     IEnumerator cooldown(int skill, float time)
     {

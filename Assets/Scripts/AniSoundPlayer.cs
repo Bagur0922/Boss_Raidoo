@@ -13,4 +13,8 @@ public class AniSoundPlayer : MonoBehaviour
     public void playSFXwithString(string name){ // 이름으로 사운드 실행
         SoundPlayer.instance.startSFX(name);
     }
+    public void playBGMwithString(string name)
+    { // 이름으로 사운드 실행
+        SoundPlayer.instance.startBGM("Start");
+    }
 }
