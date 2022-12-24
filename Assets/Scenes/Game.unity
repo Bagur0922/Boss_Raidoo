@@ -311,6 +311,7 @@ MonoBehaviour:
   player: {fileID: 187167947}
   Camera: {fileID: 1231143541}
   bar: {fileID: 1763704572}
+  Dagger: {fileID: 4180656040218297981, guid: eb5d52dae9254a142bf120470d494f77, type: 3}
   hp: 100
   changedir: 1
   canWalk: 0
@@ -1603,7 +1604,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &785616180
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2115,7 +2116,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &979173570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2458,7 +2459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1231143542
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4701,7 +4702,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1198608449481933234
 Transform:
   m_ObjectHideFlags: 0
@@ -4905,7 +4906,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5306511853890020644
 Transform:
   m_ObjectHideFlags: 0

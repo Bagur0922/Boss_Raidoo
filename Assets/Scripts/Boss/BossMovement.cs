@@ -13,6 +13,7 @@ public class BossMovement : MonoBehaviour
     public GameObject Camera;
 
     [SerializeField] GameObject bar;
+    [SerializeField] GameObject Dagger;
 
     float xmove;
     float thunderpos;
@@ -24,6 +25,7 @@ public class BossMovement : MonoBehaviour
     bool startg = false;
     bool stop = false;
     bool downback = true;
+    bool okd = true;
 
     [SerializeField]bool changedir = true;
     [SerializeField]bool canWalk = false;
@@ -255,8 +257,11 @@ public class BossMovement : MonoBehaviour
     }
     public IEnumerator down()
     {
-        hp = hp - 5;
-        bar.GetComponent<Image>().fillAmount = hp / 100;
+        if(hp == 5)
+        {
+            StartCoroutine(damaged());
+        }
+        StartCoroutine(damaged());
         StopCoroutine(thunder());
         StopCoroutine(nattack());
         stop = true;
@@ -275,6 +280,19 @@ public class BossMovement : MonoBehaviour
         changedir = true;
         yield return null;
     }
+    IEnumerator damaged()
+    {
+        Debug.Log("¸ÂÀ½");
+        if (okd)
+        {
+            Debug.Log("´à");
+            hp = hp - 5;
+            bar.GetComponent<Image>().fillAmount = hp / 100;
+            okd = false;
+        }
+        yield return new WaitForSeconds(1.5f);
+        okd = true;
+    }
     public IEnumerator counter()
     {
         stop = true;
@@ -284,7 +302,12 @@ public class BossMovement : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         ghosting = false;
         changedir = false;
+        Debug.Log("Àü");
         yield return new WaitWhile(() => !player.GetComponent<PlayerMovement>().anyaction);
+        Debug.Log("ÈÄ");
+        //anim.SetTrigger("Throw");
+        //yield return new WaitForSeconds(0.75f);
+        Instantiate(Dagger, transform);
         canWalk = true;
         stop = false;
         ready = true;
