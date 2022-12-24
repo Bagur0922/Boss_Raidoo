@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public bool direction = true; //플레이어가 보고 있는  방향
     public bool anyaction = false; //동작 가능한지
     public bool Trigger = false;
+    public bool counteranyaction = true;
 
     int alghost = 0; //이미 잔상이 나오고 있는가
     int alback = 0; //이미 돌아오고 있는가
@@ -50,8 +51,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         value();
-        if (!anyaction || Time.timeScale == 0)
+        if (!counteranyaction || !anyaction || Time.timeScale == 0)
         {
+            Debug.Log(counteranyaction);
+            Debug.Log(anyaction);
             return;
         }
         //touchingwall = false;
@@ -205,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public IEnumerator counter()
     {
-        anyaction = false;
+        counteranyaction = false;
         rb.velocity = new Vector2(0, 0);
 
         yield return new WaitWhile(() => !Trigger);
@@ -227,6 +230,6 @@ public class PlayerMovement : MonoBehaviour
         
         anim.SetTrigger("fly_down");
         yield return new WaitForSeconds(11 / 12f);
-        anyaction = true;
+        counteranyaction = true;
     }
 }

@@ -17,10 +17,21 @@ public class p_HitBox : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (attacking && damage && other.tag == "b_AttackBox")
+        if(other.GetComponent<BossMovement>() != null)
         {
-            StartCoroutine(player.GetComponent<PlayerMovement>().damaged());
-            health.GetComponent<HP>().health--;
+            if (other.GetComponent<BossMovement>().attacking && damage && other.tag == "b_AttackBox")
+            {
+                StartCoroutine(player.GetComponent<PlayerMovement>().damaged());
+                health.GetComponent<HP>().health--;
+            }
+        }
+        else if (other.GetComponent<thunder>() != null)
+        {
+            if (other.GetComponent<thunder>().attacking && damage && other.tag == "b_AttackBox")
+            {
+                StartCoroutine(player.GetComponent<PlayerMovement>().damaged());
+                health.GetComponent<HP>().health--;
+            }
         }
     }
 
