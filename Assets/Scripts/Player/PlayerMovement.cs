@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     SpriteRenderer sr;
 
     [SerializeField] Sprite fly;
+    [SerializeField] bool shake;
+
+    public GameObject boss;
+    public GameObject Camera;
 
     public int speed = 2;
 
@@ -28,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public bool ghosting = false; //잔상 On/Off
     public bool direction = true; //플레이어가 보고 있는  방향
     public bool anyaction = false; //동작 가능한지
+    public bool Trigger = false;
 
     int alghost = 0; //이미 잔상이 나오고 있는가
     int alback = 0; //이미 돌아오고 있는가
@@ -44,7 +49,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!anyaction)
+        value();
+        if (!anyaction || Time.timeScale == 0)
         {
             return;
         }
@@ -57,6 +63,17 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             roll();
+        }
+    }
+    void value()
+    {
+        if (shake)
+        {
+            Camera.GetComponent<CameraShake>().shake = true;
+        }
+        else
+        {
+            Camera.GetComponent<CameraShake>().shake = false;
         }
     }
     void move()
@@ -117,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
                 canAttack = false;
                 speed = 10;
                 anim.SetTrigger("Attack");
-                StartCoroutine(ghost(0.5f));
+                //StartCoroutine(ghost(0.5f));
                 StartCoroutine(comeback(0.5f));
             }
             else
@@ -136,7 +153,21 @@ public class PlayerMovement : MonoBehaviour
         canMove = false;
         canDash = false;
         canAttack = false;
-        StartCoroutine(comeback(0.75f));
+        anyaction = false;
+        if (!direction)
+        {
+            rb.velocity = new Vector2(10, 0);
+        }
+        else
+        {
+            rb.velocity = new Vector2(-10, 0);
+        }
+        yield return new WaitForSeconds(1/3);
+        rb.velocity = new Vector2(0, 0);
+        canMove = true;
+        canDash = true;
+        canAttack = true;
+        anyaction = true;
         yield return null;
     }
     IEnumerator ghost(float time)
@@ -176,22 +207,18 @@ public class PlayerMovement : MonoBehaviour
     {
         anyaction = false;
         rb.velocity = new Vector2(0, 0);
-        yield return new WaitForSeconds(2/11f);
 
-        sr.enabled = false;
+        yield return new WaitWhile(() => !Trigger);
 
-        yield return new WaitForSeconds(9/11f);
-
-        sr.enabled = true;
         anim.SetTrigger("counter");
 
         if (direction)
         {
-            rb.velocity = new Vector2(-20, 0);
+            rb.velocity = new Vector2(-40, 0);
         }
         else
         {
-            rb.velocity = new Vector2(20, 0);
+            rb.velocity = new Vector2(40, 0);
         }
 
         yield return new WaitWhile(() => transform.position.x > -8  && transform.position.x < 8);

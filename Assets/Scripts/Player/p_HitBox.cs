@@ -6,9 +6,10 @@ public class p_HitBox : MonoBehaviour
 {
     public GameObject player;
     public GameObject boss;
+    public GameObject health;
 
     bool attacking;
-    bool Dashing;
+    bool damage;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +17,10 @@ public class p_HitBox : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (attacking && Dashing && other.tag == "b_AttackBox")
+        if (attacking && damage && other.tag == "b_AttackBox")
         {
             StartCoroutine(player.GetComponent<PlayerMovement>().damaged());
+            health.GetComponent<HP>().health--;
         }
     }
 
@@ -26,6 +28,6 @@ public class p_HitBox : MonoBehaviour
     void Update()
     {
         attacking = boss.GetComponent<BossMovement>().attacking;
-        Dashing = player.GetComponent<PlayerMovement>().damge;
+        damage = player.GetComponent<PlayerMovement>().damge;
     }
 }

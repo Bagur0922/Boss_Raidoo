@@ -1,17 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossMovement : MonoBehaviour
 {
     Animator anim;
     SpriteRenderer sr;
     Rigidbody2D rb;
+
     public GameObject player;
+    public GameObject Camera;
 
-    int xmove;
+    [SerializeField] GameObject bar;
 
-    bool changedir = true;
+    float xmove;
+    float thunderpos;
+    float distance;
+    float speed = 7;
+
+    [SerializeField]float hp = 100;
+
+    bool startg = false;
+    bool stop = false;
+    bool downback = true;
+
+    [SerializeField]bool changedir = true;
+    [SerializeField]bool canWalk = false;
+    [SerializeField] bool shake = false;
+    [SerializeField] bool pron = true;
+    [SerializeField] bool Trigger = false;
 
     public bool ready = true;
     public bool attacking = true;
@@ -19,11 +37,9 @@ public class BossMovement : MonoBehaviour
     public bool ghosting = false;
     public bool direction = false;
     public bool counteren = true;
-
+    
     [SerializeField] public int[] cool; //1은 사용 가능, 0은 쿨타임중. 0은 벽력일섬, 1은 구르기
 
-    float distance;
-    float speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,20 +58,42 @@ public class BossMovement : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         yield return new WaitForSeconds(2.8f);
         player.GetComponent<PlayerMovement>().anyaction = true;
+        startg = true;
     }
     // Update is called once per frame
     void Update()
     {
         distance = player.transform.position.x - gameObject.transform.position.x;
+        walk();
+        value();
         look();
         skill();
-        if (Input.GetKey(KeyCode.R))
+    }
+    void value()
+    {
+        if (shake)
         {
-            changedir = false;
+            Camera.GetComponent<CameraShake>().shake = true;
         }
         else
         {
-            changedir = true;
+            Camera.GetComponent<CameraShake>().shake = false;
+        }
+        if (pron)
+        {
+            player.GetComponent<SpriteRenderer>().enabled = true;
+        }
+        else
+        {
+            player.GetComponent<SpriteRenderer>().enabled = false;
+        }
+        if (Trigger)
+        {
+            player.GetComponent<PlayerMovement>().Trigger = true;
+        }
+        else
+        {
+            player.GetComponent<PlayerMovement>().Trigger = false;
         }
     }
     void look()
@@ -73,94 +111,182 @@ public class BossMovement : MonoBehaviour
     }
     void skill()
     {
-        if (Mathf.Abs(distance) < 5 && ready && cool[0] == 1)
+        if (ready)
         {
-            ready = false;
-            StartCoroutine(thunder());
+            if (transform.position.x < 0 && transform.position.x > -2 && cool[0] == 1 || transform.position.x > 0 && transform.position.x < 2 && cool[0] == 1)
+            {
+                stop = true;
+                canWalk = false;
+                ready = false;
+                StartCoroutine(thunder());
+            }
+            else if (Mathf.Abs(distance) < 2 && cool[1] == 1)
+            {
+                canWalk = false;
+                ready = false;
+                changedir = false;
+                StartCoroutine(roll());
+            }
+            else if(Mathf.Abs(distance) < 1.5f && cool[2] == 1)
+            {
+                stop = true;
+                canWalk = false;
+                ready = false;
+                changedir = false;
+                StartCoroutine(nattack());
+            }
         }
-        else if (Mathf.Abs(distance) < 2 && ready && cool[1] == 1)
+    }
+    void walk()
+    {
+        if (canWalk)
         {
-            changedir = false;
-            ready = false;
-            StartCoroutine(roll());
+            if (Mathf.Abs(distance) > 2.5f)
+            {
+                anim.SetBool("isWalking", true);
+                if (!direction)
+                {
+                    xmove = -0.5f;
+                }
+                if (direction)
+                {
+                    xmove = 0.5f;
+                }
+                Vector2 getvel = new Vector2(xmove * speed, 0);
+                rb.velocity = getvel;
+            }
+            else
+            {
+                rb.velocity = new Vector2(0, 0);
+                anim.SetBool("isWalking", false);
+            }
         }
+        else if(startg && stop)
+        {
+            anim.SetBool("isWalking", false);
+            rb.velocity = new Vector2(0, 0);
+        }
+    }
+    IEnumerator nattack()
+    {
+        cool[2] = 0;
+        anim.SetTrigger("attack");
+        yield return new WaitForSeconds(1.25f);
+        StartCoroutine(cooldown(2, 2.5f));
+        stop = false;
+        if (downback)
+        {
+            canWalk = true;
+            ready = true;
+            changedir = true;
+        }
+        yield return null;
     }
     IEnumerator roll()
     {
-        if(cool[1] == 1)
+        ghosting = true;
+        changedir = false;
+        cool[1] = 0;
+        damage = false;
+        anim.SetTrigger("roll");
+        speed = 14;
+        if (!direction)
         {
-            ghosting = true;
-            changedir = false;
-            cool[1] = 0;
-            damage = false;
-            anim.SetTrigger("roll");
-            speed = 14;
-            if (!direction)
-            {
-                gameObject.transform.localScale = new Vector3(-1, 1, 1);
-                xmove = -1;
-            }
-            if (direction)
-            {
-                gameObject.transform.localScale = new Vector3(1, 1, 1);
-                xmove = 1;
-            }
-            Vector2 getvel = new Vector2(xmove * speed, 0);
-            rb.velocity = getvel;
-            yield return new WaitForSeconds(0.5f);
-            StartCoroutine(cooldown(1, 2.5f));
-            rb.velocity = new Vector2(0, 0);
-            speed = 7;
-            changedir = true;
-            ghosting = false;
-            ready = true;
+            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            xmove = -1;
         }
-        
+        if (direction)
+        {
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
+            xmove = 1;
+        }
+        Vector2 getvel = new Vector2(xmove * speed, 0);
+        rb.velocity = getvel;
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(cooldown(1, 1.25f));
+        rb.velocity = new Vector2(0, 0);
+        speed = 7;
+        ghosting = false;
+        if (downback)
+        {
+            ready = true;
+            changedir = true;
+            canWalk = true;
+        }
+        yield return null;
     }
     IEnumerator thunder()
     {
+        thunderpos = transform.position.x;
         anim.SetTrigger("thunder_start");
         changedir = false;
         yield return new WaitForSeconds(0.375f);
+        stop = false;
         if (direction)
         {
-            rb.AddForce(Vector2.right * 120f, ForceMode2D.Impulse);
+            rb.velocity = new Vector2(140, 0);
+            /*transform.position = new Vector2(transform.position.x + 7, transform.position.y);
+            thunderpos = thunderpos + 7;*/
         }
         else
         {
-            rb.AddForce(Vector2.left * 120f, ForceMode2D.Impulse);
+            rb.velocity = new Vector2(-140, 0);
+            /*transform.position = new Vector2(transform.position.x - 7, transform.position.y);
+            thunderpos = thunderpos - 7;*/
         }
-        yield return new WaitForSeconds(0.0645f);
+        yield return new WaitUntil(() => transform.position.x > thunderpos + 6 || transform.position.x < thunderpos - 6);
         rb.velocity = new Vector2(0, 0);
         anim.SetTrigger("thunder_end");
         yield return new WaitForSeconds(0.5f);
         anim.SetTrigger("backtostand");
-        changedir = true;
-        ready = true;
         cool[0] = 0;
         StartCoroutine(cooldown(0, 15));
+        if (downback)
+        {
+            changedir = true;
+            canWalk = true;
+            ready = true;
+        }
+        /*if(transform.position.x < -9 || transform.position.x > 9)
+        {
+            transform.position = new Vector2(thunderpos, transform.position.y);
+        }*/
         yield return null;
     }
     public IEnumerator down()
     {
+        hp = hp - 5;
+        bar.GetComponent<Image>().fillAmount = hp / 100;
+        StopCoroutine(thunder());
+        StopCoroutine(nattack());
+        stop = true;
+        canWalk = false;
+        ready = false;
         changedir = false;
         damage = false;
+        downback = false;
         anim.SetTrigger("down");
-        ready = false;
         yield return new WaitForSeconds(1.5f);
-        damage = true;
+        downback = true;
+        stop = false;
+        canWalk = true;
         ready = true;
+        damage = true;
         changedir = true;
         yield return null;
     }
     public IEnumerator counter()
     {
+        stop = true;
+        canWalk = false;
+        ready = false;
         anim.SetTrigger("counter");
         rb.velocity = new Vector2(0, 0);
-        ready = false;
         ghosting = false;
         changedir = false;
         yield return new WaitWhile(() => !player.GetComponent<PlayerMovement>().anyaction);
+        canWalk = true;
+        stop = false;
         ready = true;
         changedir = true;
     }

@@ -24,7 +24,7 @@ public class b_HitBox : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         distance = boss.transform.position.x - player.transform.position.x;
         if(boss.transform.localScale  == new Vector3(1, 1, 1))

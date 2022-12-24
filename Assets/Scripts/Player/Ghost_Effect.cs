@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Ghost_Effect : MonoBehaviour
 {
-    bool direction = true;
-
     [SerializeField] bool pb; //true면 플레이어, false면 보스
 
     public GameObject player;
