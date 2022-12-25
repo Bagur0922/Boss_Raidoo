@@ -48,7 +48,7 @@ public class BossMovement : MonoBehaviour
     {
         //SoundPlayer.instance.startBGM("Start");
 
-        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement = player.GetComponent<PlayerMovement>();
         
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();

@@ -53,8 +53,6 @@ public class PlayerMovement : MonoBehaviour
         value();
         if (!counteranyaction || !anyaction || Time.timeScale == 0)
         {
-            Debug.Log(counteranyaction);
-            Debug.Log(anyaction);
             return;
         }
         //touchingwall = false;
