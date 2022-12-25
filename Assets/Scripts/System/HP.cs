@@ -7,6 +7,8 @@ public class HP : MonoBehaviour
     [SerializeField] List<GameObject> Hearts;
 
     public int health = 3;
+
+    bool okd;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,5 +42,15 @@ public class HP : MonoBehaviour
             Hearts[1].SetActive(false);
             Hearts[2].SetActive(false);
         }
+    }
+    IEnumerator damaged()
+    {
+        if (okd)
+        {
+            health--;
+            okd = false;
+        }
+        yield return new WaitForSeconds(1.5f);
+        okd = true;
     }
 }

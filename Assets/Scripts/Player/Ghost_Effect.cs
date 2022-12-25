@@ -35,13 +35,16 @@ public class Ghost_Effect : MonoBehaviour
         }
         else if (!pb)
         {
-            if (!player.GetComponent<BossMovement>().ghosting)
+            if(player.GetComponent<BossMovement>() != null)
             {
-                sr.enabled = false;
-            }
-            else
-            {
-                sr.enabled = true;
+                if (!player.GetComponent<BossMovement>().ghosting)
+                {
+                    sr.enabled = false;
+                }
+                else
+                {
+                    sr.enabled = true;
+                }
             }
         }
     }

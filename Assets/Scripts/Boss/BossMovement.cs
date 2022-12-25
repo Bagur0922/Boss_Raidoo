@@ -69,6 +69,11 @@ public class BossMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (hp == 0)
+        {
+            anim.SetTrigger("die");
+            Destroy(this);
+        }
         distance = player.transform.position.x - gameObject.transform.position.x;
         walk();
         value();
@@ -246,7 +251,7 @@ public class BossMovement : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         anim.SetTrigger("backtostand");
         cool[0] = 0;
-        StartCoroutine(cooldown(0, 15));
+        StartCoroutine(cooldown(0, 7.5f));
         if (downback)
         {
             changedir = true;
@@ -261,10 +266,7 @@ public class BossMovement : MonoBehaviour
     }
     public IEnumerator down()
     {
-        if(hp == 5)
-        {
-            StartCoroutine(damaged());
-        }
+        StartCoroutine(damaged());
         StartCoroutine(damaged());
         StopCoroutine(thunder());
         StopCoroutine(nattack());
@@ -286,10 +288,8 @@ public class BossMovement : MonoBehaviour
     }
     IEnumerator damaged()
     {
-        Debug.Log("¸ÂÀ½");
         if (okd)
         {
-            Debug.Log("´à");
             hp = hp - 5;
             bar.GetComponent<Image>().fillAmount = hp / 100;
             okd = false;

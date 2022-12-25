@@ -312,7 +312,7 @@ MonoBehaviour:
   Camera: {fileID: 1231143541}
   bar: {fileID: 1763704572}
   Dagger: {fileID: 4488137264829344064, guid: eb5d52dae9254a142bf120470d494f77, type: 3}
-  hp: 100
+  hp: 20
   changedir: 1
   canWalk: 0
   shake: 0
@@ -848,6 +848,7 @@ MonoBehaviour:
   direction: 0
   anyaction: 0
   Trigger: 0
+  counteranyaction: 1
 --- !u!50 &187167951
 Rigidbody2D:
   serializedVersion: 4
@@ -1920,6 +1921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d93ae02d8129a4aa35c7ceaf4da6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: 0
 --- !u!1 &960956493
 GameObject:
   m_ObjectHideFlags: 0
@@ -4830,7 +4832,6 @@ MonoBehaviour:
   bgms:
   - name: Start
     audios:
-    - {fileID: 8300000, guid: 07ef7eb8a2a3d2e4dba7e7fd021590c6, type: 3}
     - {fileID: 8300000, guid: 3fc266348833bfa4fab65df6448d7057, type: 3}
     - {fileID: 8300000, guid: 9f289607e728ff64b8d700bd8f425842, type: 3}
   sfxs:
@@ -4867,6 +4868,12 @@ MonoBehaviour:
   - name: thuder_end
     audios:
     - {fileID: 8300000, guid: 94fa6392839fa6f498395eba52476f9b, type: 3}
+  - name: voice
+    audios:
+    - {fileID: 8300000, guid: 07ef7eb8a2a3d2e4dba7e7fd021590c6, type: 3}
+  - name: walk
+    audios:
+    - {fileID: 8300000, guid: f23bc41e6ad5f6243bd29b6ae229ca72, type: 3}
   bgmSource: {fileID: 7858909707649759802}
   sfxSource: {fileID: 2153306641978520445}
   BGMvolume: 0
