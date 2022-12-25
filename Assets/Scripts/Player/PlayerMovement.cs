@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] Sprite fly;
     [SerializeField] bool shake;
+    [SerializeField] bool tuto = false;
 
     public GameObject boss;
     public GameObject Camera;
@@ -42,6 +43,11 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (tuto)
+        {
+            counteranyaction = true;
+            anyaction = true;
+        }
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         sr = gameObject.GetComponent<SpriteRenderer>();
