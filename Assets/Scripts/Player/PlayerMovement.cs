@@ -106,8 +106,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void roll()
     { 
-        Debug.Log("roll");
-        
         if (canDash && !isAttacking)
         //스페이스바를 눌렀고 대쉬 가능하며 공격중이지 않은가
         {
@@ -122,10 +120,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void Attack()
     {
-        
         if (canAttack)
         {
-            Debug.Log("Attack");
             if (xmove != 0)
             {
                 attackmove = true;
@@ -181,8 +177,6 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator ghost(float time)
     {
-        Debug.Log("ghost");
-        
         int current = 0;
         alghost++;
         current = alghost;
@@ -197,8 +191,6 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator comeback(float time)
     {
-        Debug.Log("comeback");
-        
         int current = 0;
         alback++;
         current = alback;
@@ -218,8 +210,6 @@ public class PlayerMovement : MonoBehaviour
     }
     public IEnumerator counter()
     {
-        Debug.Log("counter");
-        
         damge = false;
         counteranyaction = false;
         rb.velocity = new Vector2(0, 0);
