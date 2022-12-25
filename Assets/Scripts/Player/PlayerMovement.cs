@@ -208,6 +208,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public IEnumerator counter()
     {
+        damge = false;
         counteranyaction = false;
         rb.velocity = new Vector2(0, 0);
 
@@ -230,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
         
         anim.SetTrigger("fly_down");
         yield return new WaitForSeconds(11 / 12f);
+        damge = true;
         counteranyaction = true;
     }
 }

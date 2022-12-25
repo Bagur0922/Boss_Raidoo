@@ -125,8 +125,8 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.4166666
-    functionName: playBGMwithString
-    data: start
+    functionName: playSFXwithString
+    data: voice
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

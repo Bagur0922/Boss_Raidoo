@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SettingManager : MonoBehaviour
 {
+    public float timer = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +14,8 @@ public class SettingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Time.timeScale);
+        timer += Time.deltaTime;
+        Debug.Log(timer);
         if (Input.GetKeyDown(KeyCode.Escape) && Time.timeScale == 1)
         {
             Time.timeScale = 0;
