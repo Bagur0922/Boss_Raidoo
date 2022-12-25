@@ -7,37 +7,33 @@ public class p_HitBox : MonoBehaviour
     public GameObject player;
     public GameObject boss;
     public GameObject health;
+    PlayerMovement playerMovement;
+    HP hpUI;
 
-    bool damage;
-    // Start is called before the first frame update
     void Start()
     {
-        
+        playerMovement = player.GetComponent<PlayerMovement>();
+        hpUI = health.GetComponent<HP>();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other);
         if(other.GetComponent<b_AttackBox>() != null)
         {
-            if (boss.GetComponent<BossMovement>().attacking && damage && other.tag == "b_AttackBox")
+            if (boss.GetComponent<BossMovement>().attacking && playerMovement.damge && other.tag == "b_AttackBox")
             {
-                StartCoroutine(player.GetComponent<PlayerMovement>().damaged());
-                health.GetComponent<HP>().health--;
+                StartCoroutine(playerMovement.damaged());
+                hpUI.Damaged();
             }
         }
         else if (other.GetComponent<thunder>() != null)
         {
-            if (other.GetComponent<thunder>().attacking && damage && other.tag == "b_AttackBox")
+            if (other.GetComponent<thunder>().attacking && playerMovement.damge && other.tag == "b_AttackBox")
             {
-                StartCoroutine(player.GetComponent<PlayerMovement>().damaged());
-                health.GetComponent<HP>().health--;
+                StartCoroutine(playerMovement.damaged());
+                hpUI.Damaged();
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        damage = player.GetComponent<PlayerMovement>().damge;
-    }
+    
 }

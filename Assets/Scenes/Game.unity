@@ -838,6 +838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc835da0bcebf5e46af455c7a2f6ad62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutoText: {fileID: 0}
   fly: {fileID: 21300000, guid: f04a74b81d455214c8228a3508e78112, type: 3}
   shake: 0
   tuto: 0
@@ -1369,6 +1370,7 @@ MonoBehaviour:
   - {fileID: 129549538}
   - {fileID: 1363370653}
   - {fileID: 52523066}
+  player: {fileID: 187167950}
   health: 3
 --- !u!4 &558610043
 Transform:

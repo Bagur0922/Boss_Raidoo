@@ -61,11 +61,13 @@ public class b_HitBox : MonoBehaviour
             counter = false;
         }
 
-        if (damage && boss.GetComponent<BossMovement>().damage && Mathf.Abs(distance) < 3.6f && player.GetComponent<PlayerMovement>().isAttacking)
+        if (damage && boss.GetComponent<BossMovement>().damage && Mathf.Abs(distance) < 3.6f
+            && player.GetComponent<PlayerMovement>().isAttacking)
         {
             StartCoroutine(boss.GetComponent<BossMovement>().down());
         }
-        else if(counter && boss.GetComponent<BossMovement>().damage && boss.GetComponent<BossMovement>().ready && Mathf.Abs(distance) < 3.6f && player.GetComponent<PlayerMovement>().isAttacking)
+        else if(counter && boss.GetComponent<BossMovement>().damage && boss.GetComponent<BossMovement>().ready
+            && Mathf.Abs(distance) < 3.6f && player.GetComponent<PlayerMovement>().isAttacking)
         {
             player.GetComponent<PlayerMovement>().damge = false;
             StartCoroutine(player.GetComponent<PlayerMovement>().counter());
