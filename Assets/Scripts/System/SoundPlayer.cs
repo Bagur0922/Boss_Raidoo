@@ -34,10 +34,13 @@ public class SoundPlayer : MonoBehaviour
     public AudioSource sfxSource;
     [Range(-40f, 0f)]
     public float BGMvolume = 0f;
+    public int bgmVInt = 8;
     [Range(-40f, 0f)]
     public float SFXvolume = 0f;
+    public int sfxVInt = 8;
     [Range(-40f, 0f)]
     public float MasterVolume = 0f;
+    public int masterVInt = 8;
     private Bgm nowPlaying;
     private int trackNum;
     private bool isPlayBgmOneShot = false;
@@ -102,11 +105,28 @@ public class SoundPlayer : MonoBehaviour
         setSFXVolume(PlayerPrefs.GetFloat("SFXVolume", 0f));
     }
 
+    public void setVolume(eOptionType e, int volume)
+    {
+        float value = (volume * 5f) - 40f;
+        switch (e)
+        {
+            case eOptionType.Master:
+                setMasterVolume(value);
+                break;
+            case eOptionType.BGM:
+                setBGMVolume(value);
+                break;
+            case eOptionType.SFX:
+                setSFXVolume(value);
+                break;
+        }
+    }
     public void setMasterVolume(float volume){
         if(volume == -40f) masterMixer.SetFloat("Master", -80f);
         else masterMixer.SetFloat("Master", volume);
 
         MasterVolume = volume;
+        masterVInt = Mathf.RoundToInt((volume + 40f) / 5f);
         PlayerPrefs.SetFloat("MasterVolume", volume);
     }
     public void setBGMVolume(float volume){
@@ -114,6 +134,7 @@ public class SoundPlayer : MonoBehaviour
         else masterMixer.SetFloat("BGM", volume);
         
         BGMvolume = volume;
+        bgmVInt = Mathf.RoundToInt((volume + 40f) / 5f);
         PlayerPrefs.SetFloat("BGMVolume", volume);
     }
     public void setSFXVolume(float volume){
@@ -121,6 +142,7 @@ public class SoundPlayer : MonoBehaviour
         else masterMixer.SetFloat("SFX", volume);
         
         SFXvolume = volume;
+        sfxVInt = Mathf.RoundToInt((volume + 40f) / 5f);
         PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 

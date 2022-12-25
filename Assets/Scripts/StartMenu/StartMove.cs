@@ -13,7 +13,7 @@ public enum eOptionType
 {
     Master = 0,
     BGM,
-    SE,
+    SFX,
 }
 public class StartMove : MonoBehaviour
 {
@@ -95,7 +95,7 @@ public class StartMove : MonoBehaviour
                     anim.SetBool("OptionWindow", false);
                     curTitleType = eTitleType.Main;
                 }
-                if (Input.GetKeyDown(KeyCode.DownArrow) && curOptionType != eOptionType.SE)
+                if (Input.GetKeyDown(KeyCode.DownArrow) && curOptionType != eOptionType.SFX)
                 {
                     curOptionType++;
                     optionDagger.transform.position = volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]].position;
@@ -111,7 +111,7 @@ public class StartMove : MonoBehaviour
                     curVolTarget[(int)curOptionType] = tmp - 1 >= 0 ? --tmp : 0;
                     optionDagger.transform.position = volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]].position;
                     optionTarget[(int)curOptionType].transform.position = volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]].position;
-                    AudioManager.ins.VolumeSet(curOptionType, curVolTarget[(int)curOptionType]);
+                    SoundPlayer.instance.setVolume(curOptionType, curVolTarget[(int)curOptionType]);
                 }
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
@@ -119,7 +119,7 @@ public class StartMove : MonoBehaviour
                     curVolTarget[(int)curOptionType] = tmp + 1 <= 8 ? ++tmp : 8;
                     optionDagger.transform.position = volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]].position;
                     optionTarget[(int)curOptionType].transform.position = volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]].position;
-                    AudioManager.ins.VolumeSet(curOptionType, curVolTarget[(int)curOptionType]);
+                    SoundPlayer.instance.setVolume(curOptionType, curVolTarget[(int)curOptionType]);
                 }
                 break;
             case eTitleType.Credit:
@@ -140,9 +140,9 @@ public class StartMove : MonoBehaviour
 
     public void DaggerOn()
     {
-        curVolTarget[(int)eOptionType.Master] = (int)Mathf.Round(AudioManager.ins.masterVolume * 8);
-        curVolTarget[(int)eOptionType.BGM] = (int)Mathf.Round(AudioManager.ins.bgmVolume * 8);
-        curVolTarget[(int)eOptionType.SE] = (int)Mathf.Round(AudioManager.ins.seVolume * 8);
+        curVolTarget[(int)eOptionType.Master] = (int)Mathf.Round(SoundPlayer.instance.masterVInt);
+        curVolTarget[(int)eOptionType.BGM] = (int)Mathf.Round(SoundPlayer.instance.bgmVInt);
+        curVolTarget[(int)eOptionType.SFX] = (int)Mathf.Round(SoundPlayer.instance.sfxVInt);
         optionDagger.SetActive(true);
         optionDagger.transform.position = volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]].position;
         for (int i = 0; i < optionTarget.Length; i++)
@@ -170,9 +170,9 @@ public class StartMove : MonoBehaviour
     }
     public void OptionInitSet()
     {
-        curVolTarget[(int)eOptionType.Master] = (int)Mathf.Round(AudioManager.ins.masterVolume * 8);
-        curVolTarget[(int)eOptionType.BGM] = (int)Mathf.Round(AudioManager.ins.bgmVolume * 8);
-        curVolTarget[(int)eOptionType.SE] = (int)Mathf.Round(AudioManager.ins.seVolume * 8);
+        curVolTarget[(int)eOptionType.Master] = (int)Mathf.Round(SoundPlayer.instance.masterVInt);
+        curVolTarget[(int)eOptionType.BGM] = (int)Mathf.Round(SoundPlayer.instance.bgmVInt);
+        curVolTarget[(int)eOptionType.SFX] = (int)Mathf.Round(SoundPlayer.instance.sfxVInt);
         optionDagger.SetActive(false);
         optionDagger.transform.position = volumePos[0, curVolTarget[0]].position;
         curOptionType = eOptionType.Master;
