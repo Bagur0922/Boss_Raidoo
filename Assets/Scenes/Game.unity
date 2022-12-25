@@ -1922,6 +1922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0
+  boss: {fileID: 63025934}
 --- !u!1 &960956493
 GameObject:
   m_ObjectHideFlags: 0
