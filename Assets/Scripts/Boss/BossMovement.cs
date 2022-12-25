@@ -10,6 +10,7 @@ public class BossMovement : MonoBehaviour
     Rigidbody2D rb;
 
     public GameObject player;
+    PlayerMovement playerMovement;
     public GameObject Camera;
 
     [SerializeField] GameObject bar;
@@ -47,6 +48,8 @@ public class BossMovement : MonoBehaviour
     {
         //SoundPlayer.instance.startBGM("Start");
 
+        playerMovement = GetComponent<PlayerMovement>();
+        
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -59,8 +62,8 @@ public class BossMovement : MonoBehaviour
         yield return new WaitForSeconds(1.3f);
         rb.velocity = new Vector2(0, 0);
         yield return new WaitForSeconds(2.8f);
-        player.GetComponent<PlayerMovement>().anyaction = true;
-        player.GetComponent<PlayerMovement>().counteranyaction = true;
+        playerMovement.anyaction = true;
+        playerMovement.counteranyaction = true;
         startg = true;
     }
     // Update is called once per frame
@@ -303,18 +306,21 @@ public class BossMovement : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         ghosting = false;
         changedir = false;
-        yield return new WaitWhile(() => !player.GetComponent<PlayerMovement>().counteranyaction);
+        yield return new WaitWhile(() => !playerMovement.counteranyaction);
         anim.SetTrigger("Throw");
-        yield return new WaitForSeconds(0.75f);
-        Instantiate(Dagger, transform);
-        canWalk = true;
-        stop = false;
-        ready = true;
-        changedir = true;
     }
     IEnumerator cooldown(int skill, float time)
     {
         yield return new WaitForSeconds(time);
         cool[skill] = 1;
+    }
+    
+    public void ThrowDagger()
+    {
+        Instantiate(Dagger, transform);
+        canWalk = true;
+        stop = false;
+        ready = true;
+        changedir = true;
     }
 }
