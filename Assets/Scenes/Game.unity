@@ -840,6 +840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fly: {fileID: 21300000, guid: f04a74b81d455214c8228a3508e78112, type: 3}
   shake: 0
+  tuto: 0
   boss: {fileID: 63025934}
   Camera: {fileID: 1231143541}
   speed: 7
@@ -1274,7 +1275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &558610042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2152,7 +2153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &979173570
 MonoBehaviour:
   m_ObjectHideFlags: 0
