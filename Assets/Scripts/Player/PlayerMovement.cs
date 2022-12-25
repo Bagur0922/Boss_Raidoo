@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
     Animator anim;
     SpriteRenderer sr;
 
+    [SerializeField] Tuto_text tutoText;
     [SerializeField] Sprite fly;
     [SerializeField] bool shake;
     [SerializeField] bool tuto = false;
@@ -38,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     int alghost = 0; //이미 잔상이 나오고 있는가
     int alback = 0; //이미 돌아오고 있는가
 
-    
+    bool isDead = false;
     
     // Start is called before the first frame update
     void Start()
@@ -57,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead) return;
         value();
         if (!counteranyaction || !anyaction || Time.timeScale == 0)
         {
@@ -93,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
             xmove = -1;
             anim.SetBool("isWalking", true);
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            TutorialCheck(eTutorialState.Move);
         }
         if (Input.GetKey(KeyCode.RightArrow) && canMove && !isDashing && !attackmove || isDashing && direction && canMove && !attackmove || AttackXmove == 1 && attackmove)
         //왼쪽이랑 동일 오른쪽을 보는가로만 바뀜
@@ -101,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
             xmove = 1;
             anim.SetBool("isWalking", true);
             gameObject.transform.localScale = new Vector3(1, 1, 1);
+            TutorialCheck(eTutorialState.Move);
         }
         if (!canMove || !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) && !isDashing)
         {
@@ -122,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
             canDash = false;
             StartCoroutine(ghost(0.25f));
             StartCoroutine(comeback(0.25f));
+            TutorialCheck(eTutorialState.Roll);
         }
     }
     void Attack()
@@ -152,6 +160,7 @@ public class PlayerMovement : MonoBehaviour
                 canMove = false;
                 StartCoroutine(comeback(0.5f));
             }
+            TutorialCheck(eTutorialState.Attack);
         }
     }
     public IEnumerator damaged()
@@ -244,5 +253,20 @@ public class PlayerMovement : MonoBehaviour
     {
         damge = true;
         counteranyaction = true;
+    }
+    public void Dead()
+    {
+
+    }
+    public void TutorialCheck(eTutorialState action)
+    {
+        if (!tuto || tutoText == null) return;
+
+        int newIdx = (int)action + 1;
+        if (tutoText.curState < ++action)
+        {
+            tutoText.curState = (eTutorialState)newIdx;
+            tutoText.TextPrintAt(newIdx);
+        }
     }
 }

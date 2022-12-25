@@ -4,53 +4,25 @@ using UnityEngine;
 
 public class HP : MonoBehaviour
 {
+
+
     [SerializeField] List<GameObject> Hearts;
+    [SerializeField] PlayerMovement player;
 
     public int health = 3;
 
-    bool okd;
-    // Start is called before the first frame update
-    void Start()
+    public void Damaged()
     {
-        
+        health--;
+        Hearts[health].SetActive(false);
+        if (health < 0) player.Dead();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void InitSet()
     {
-        if(health == 3)
+        health = 3;
+        foreach (GameObject go in Hearts)
         {
-            Hearts[0].SetActive(true);
-            Hearts[1].SetActive(true);
-            Hearts[2].SetActive(true);
+            go.SetActive(true);
         }
-        else if (health == 2)
-        {
-            Hearts[0].SetActive(true);
-            Hearts[1].SetActive(true);
-            Hearts[2].SetActive(false);
-        }
-        else if(health == 1)
-        {
-            Hearts[0].SetActive(true);
-            Hearts[1].SetActive(false);
-            Hearts[2].SetActive(false);
-        }
-        else
-        {
-            Hearts[0].SetActive(false);
-            Hearts[1].SetActive(false);
-            Hearts[2].SetActive(false);
-        }
-    }
-    IEnumerator damaged()
-    {
-        if (okd)
-        {
-            health--;
-            okd = false;
-        }
-        yield return new WaitForSeconds(1.5f);
-        okd = true;
     }
 }
