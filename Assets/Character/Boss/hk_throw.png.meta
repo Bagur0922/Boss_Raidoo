@@ -292,6 +292,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: hk_throw_9
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 0
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91b1cc9fdd0898a44a0b44867d679da5
+      internalID: -1295730373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hk_throw_10
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 0
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52beaaf68ab166644bdb4ca1670f0006
+      internalID: 361015547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hk_throw_11
+      rect:
+        serializedVersion: 2
+        x: 2200
+        y: 0
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac53fa129adcb9d4aa901f14aef869a1
+      internalID: 757155947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -305,6 +368,7 @@ TextureImporter:
     nameFileIdTable:
       hk_throw_7: 1960858681
       hk_throw_1: 415707699
+      hk_throw_9: -1295730373
       hk_throw_2: -1885296039
       hk_throw_8: 984769147
       hk_throw_4: 159497145
@@ -312,6 +376,8 @@ TextureImporter:
       hk_throw_3: -1524654200
       hk_throw_0: -752466663
       hk_throw_5: 522580117
+      hk_throw_10: 361015547
+      hk_throw_11: 757155947
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

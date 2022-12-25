@@ -5,6 +5,8 @@ using UnityEngine;
 public class SettingManager : MonoBehaviour
 {
     public float timer = 0;
+    [SerializeField] GameObject boss;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +16,10 @@ public class SettingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+        if(boss.GetComponent<BossMovement>() != null)
+        {
+            timer += Time.deltaTime;
+        }
         if (Input.GetKeyDown(KeyCode.Escape) && Time.timeScale == 1)
         {
             Time.timeScale = 0;

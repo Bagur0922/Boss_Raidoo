@@ -67,6 +67,7 @@ public class b_HitBox : MonoBehaviour
         }
         else if(counter && boss.GetComponent<BossMovement>().damage && boss.GetComponent<BossMovement>().ready && Mathf.Abs(distance) < 3.6f && player.GetComponent<PlayerMovement>().isAttacking)
         {
+            player.GetComponent<PlayerMovement>().damge = false;
             StartCoroutine(player.GetComponent<PlayerMovement>().counter());
             StartCoroutine(boss.GetComponent<BossMovement>().counter());
             if (p_dir)

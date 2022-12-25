@@ -318,6 +318,10 @@ public class BossMovement : MonoBehaviour
     public void ThrowDagger()
     {
         Instantiate(Dagger, transform);
+    }
+    public void ThrowEnd()
+    {
+        Debug.Log("³¡³²");
         canWalk = true;
         stop = false;
         ready = true;
