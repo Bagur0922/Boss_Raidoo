@@ -15,6 +15,7 @@ public class BossMovement : MonoBehaviour
 
     [SerializeField] GameObject bar;
     [SerializeField] GameObject Dagger;
+    [SerializeField] Transform daggerPoint;
 
     float xmove;
     float thunderpos;
@@ -317,7 +318,10 @@ public class BossMovement : MonoBehaviour
     
     public void ThrowDagger()
     {
-        Instantiate(Dagger, transform);
+        var instance = Instantiate(Dagger);
+        instance.transform.position = daggerPoint.position;
+        instance.transform.localScale = new Vector3(transform.localScale.x, 1, 1);
+
     }
     public void ThrowEnd()
     {
