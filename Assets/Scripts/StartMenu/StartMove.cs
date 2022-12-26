@@ -51,6 +51,7 @@ public class StartMove : MonoBehaviour
         }
         OptionInitSet();
         creditObj.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     void Update()

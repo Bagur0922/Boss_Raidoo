@@ -79,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 SceneCtrlManager.ins.LoadScene(eScene.Start);
+                Time.timeScale = 1f;
             }
         }
         if (isDead)

@@ -107,7 +107,9 @@ public class SoundPlayer : MonoBehaviour
 
     public void setVolume(eOptionType e, int volume)
     {
+        
         float value = (volume * 5f) - 40f;
+        Debug.LogFormat("{0}{1}", e, value);
         switch (e)
         {
             case eOptionType.Master:
