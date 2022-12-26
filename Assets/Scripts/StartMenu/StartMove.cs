@@ -25,6 +25,7 @@ public class StartMove : MonoBehaviour
     [SerializeField] Transform volPosRoot;
     [SerializeField] GameObject optionDagger;
     [SerializeField] GameObject[] optionTarget = new GameObject[3];
+    [SerializeField] GameObject creditObj;
     Transform[,] volumePos = new Transform[3, 9];
     int[] curVolTarget = new int[3];
 
@@ -49,6 +50,7 @@ public class StartMove : MonoBehaviour
             }
         }
         OptionInitSet();
+        creditObj.SetActive(false);
     }
 
     void Update()
@@ -162,11 +164,12 @@ public class StartMove : MonoBehaviour
     }
     public void CreditOn()
     {
-
+        creditObj.SetActive(true);
     }
     public void CreditOff()
     {
         canStart = true;
+        creditObj.SetActive(false);
     }
     public void OptionInitSet()
     {

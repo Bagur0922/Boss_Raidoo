@@ -15,9 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Sprite fly;
     [SerializeField] bool shake;
     [SerializeField] bool tuto = false;
+    [SerializeField] GameObject restartMessage;
+    [SerializeField] GameObject clearImage;
 
     public GameObject boss;
+    BossMovement bossM;
     public GameObject Camera;
+    CameraShake camShake;
 
     public int speed = 2;
 
@@ -44,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
 
     bool isDead = false;
     
-    // Start is called before the first frame update
     void Start()
     {
         if (tuto)
@@ -52,16 +55,30 @@ public class PlayerMovement : MonoBehaviour
             counteranyaction = true;
             anyaction = true;
         }
+        else
+        {
+            restartMessage.SetActive(false);
+            clearImage.SetActive(false);
+        }
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         sr = gameObject.GetComponent<SpriteRenderer>();
+        bossM = boss.GetComponent<BossMovement>();
+        camShake = Camera.GetComponent<CameraShake>();
         StartCoroutine(comeback(0));
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (isDead) return;
+        if (isDead)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneCtrlManager.ins.ReloadGame();
+            }
+            return;
+        }
+        
         value();
         if (!counteranyaction || !anyaction || Time.timeScale == 0)
         {
@@ -80,13 +97,14 @@ public class PlayerMovement : MonoBehaviour
     }
     void value()
     {
+        if (camShake == null) return;
         if (shake)
         {
-            Camera.GetComponent<CameraShake>().shake = true;
+            camShake.shake = true;
         }
         else
         {
-            Camera.GetComponent<CameraShake>().shake = false;
+            camShake.shake = false;
         }
     }
     void move()
@@ -256,17 +274,34 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Dead()
     {
-
+        isDead = true;
+        anim.SetTrigger("Dead");
+        StartCoroutine(Restart());
+        bossM.PlayerDead();
+    }
+    IEnumerator Restart()
+    {
+        // 재시작하려면 뭐뭐를 입력해주세요
+        
+        yield return new WaitForSeconds(1f);
+        restartMessage.SetActive(true);
     }
     public void TutorialCheck(eTutorialState action)
     {
         if (!tuto || tutoText == null) return;
 
-        int newIdx = (int)action + 1;
-        if (tutoText.curState < ++action)
+        switch (action)
         {
-            tutoText.curState = (eTutorialState)newIdx;
-            tutoText.TextPrintAt(newIdx);
+            case eTutorialState.Move:
+                tutoText.PlayerMove();
+                break;
+            case eTutorialState.Roll:
+                tutoText.PlayerRoll();
+                break;
+            case eTutorialState.Attack:
+                tutoText.PlayerAttack();
+                break;
+                    
         }
     }
 }

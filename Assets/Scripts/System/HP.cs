@@ -15,7 +15,7 @@ public class HP : MonoBehaviour
     {
         health--;
         Hearts[health].SetActive(false);
-        if (health < 0) player.Dead();
+        if (health <= 0) player.Dead();
     }
     public void InitSet()
     {

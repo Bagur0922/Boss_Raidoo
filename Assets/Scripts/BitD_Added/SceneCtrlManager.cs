@@ -27,4 +27,9 @@ public class SceneCtrlManager : MonoBehaviour
     {
         SceneManager.LoadScene(es.ToString());
     }
+
+    public void ReloadGame()
+    {
+        SceneManager.LoadScene("Game");
+    }
 }
