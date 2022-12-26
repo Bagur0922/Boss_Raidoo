@@ -5,7 +5,9 @@ using UnityEngine;
 public class b_HitBox : MonoBehaviour
 {
     public GameObject player;
+    PlayerMovement playerM;
     public GameObject boss;
+    BossMovement bossM;
     
     public bool b_dir;
     public bool p_dir;
@@ -15,17 +17,15 @@ public class b_HitBox : MonoBehaviour
 
     public float distance;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        playerM = player.GetComponent<PlayerMovement>();
+        bossM = boss.GetComponent<BossMovement>();
     }
 
-
-
-    // Update is called once per frame
     void LateUpdate()
     {
+        if (bossM == null) return;
         distance = boss.transform.position.x - player.transform.position.x;
         if(boss.transform.localScale  == new Vector3(1, 1, 1))
         {
@@ -61,17 +61,17 @@ public class b_HitBox : MonoBehaviour
             counter = false;
         }
 
-        if (damage && boss.GetComponent<BossMovement>().damage && Mathf.Abs(distance) < 3.6f
-            && player.GetComponent<PlayerMovement>().isAttacking)
+        if (damage && bossM.damage && Mathf.Abs(distance) < 3.6f
+            && playerM.isAttacking)
         {
-            StartCoroutine(boss.GetComponent<BossMovement>().down());
+            StartCoroutine(bossM.down());
         }
-        else if(counter && boss.GetComponent<BossMovement>().damage && boss.GetComponent<BossMovement>().ready
-            && Mathf.Abs(distance) < 3.6f && player.GetComponent<PlayerMovement>().isAttacking)
+        else if(counter && bossM.damage && bossM.ready
+            && Mathf.Abs(distance) < 3.6f && playerM.isAttacking)
         {
-            player.GetComponent<PlayerMovement>().damge = false;
-            StartCoroutine(player.GetComponent<PlayerMovement>().counter());
-            StartCoroutine(boss.GetComponent<BossMovement>().counter());
+            playerM.damge = false;
+            StartCoroutine(playerM.counter());
+            StartCoroutine(bossM.counter());
             if (p_dir)
             {
                 player.transform.position = boss.transform.position + Vector3.left * 1.7f;

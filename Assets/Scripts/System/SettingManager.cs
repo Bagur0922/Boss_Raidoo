@@ -5,18 +5,11 @@ using UnityEngine;
 public class SettingManager : MonoBehaviour
 {
     public float timer = 0;
-    [SerializeField] GameObject boss;
+    [SerializeField] BossMovement boss;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if(boss.GetComponent<BossMovement>() != null)
+        if(boss != null)
         {
             timer += Time.deltaTime;
         }

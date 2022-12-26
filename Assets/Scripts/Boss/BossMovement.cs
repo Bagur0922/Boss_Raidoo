@@ -12,22 +12,27 @@ public class BossMovement : MonoBehaviour
     public GameObject player;
     PlayerMovement playerMovement;
     public GameObject Camera;
+    CameraShake camShake;
 
     [SerializeField] GameObject bar;
     [SerializeField] GameObject Dagger;
     [SerializeField] Transform daggerPoint;
+    [SerializeField] BoxCollider2D hitBoxCol;
 
     float xmove;
     float thunderpos;
     float distance;
     float speed = 7;
 
-    [SerializeField]float hp = 100;
+    [SerializeField] float maxHp = 100;
+    [SerializeField] float hp;
 
     bool startg = false;
     bool stop = false;
     bool downback = true;
     bool okd = true;
+    bool stopUpdate = false;
+    bool isDead = false;
 
     [SerializeField]bool changedir = true;
     [SerializeField]bool canWalk = false;
@@ -41,16 +46,22 @@ public class BossMovement : MonoBehaviour
     public bool ghosting = false;
     public bool direction = false;
     public bool counteren = true;
+    public bool specialSkillUsed = false;
     
     [SerializeField] public int[] cool; //1은 사용 가능, 0은 쿨타임중. 0은 벽력일섬, 1은 구르기
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        //hp = maxHp;
+    }
     void Start()
     {
         //SoundPlayer.instance.startBGM("Start");
-
-        playerMovement = player.GetComponent<PlayerMovement>();
         
+        playerMovement = player.GetComponent<PlayerMovement>();
+        camShake = Camera.GetComponent<CameraShake>();
+
+
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -67,13 +78,21 @@ public class BossMovement : MonoBehaviour
         playerMovement.counteranyaction = true;
         startg = true;
     }
-    // Update is called once per frame
     void Update()
     {
-        if (hp == 0)
+        if (stopUpdate || isDead) return;
+        if (hp <= 0)
         {
             anim.SetTrigger("die");
             Destroy(this);
+            playerMovement.ClearGame();
+            isDead = true;
+            return;
+        }
+        if (!specialSkillUsed && hp / maxHp <= 0.3f)
+        {
+            SpecialSkillStart();
+            return;
         }
         distance = player.transform.position.x - gameObject.transform.position.x;
         walk();
@@ -83,14 +102,12 @@ public class BossMovement : MonoBehaviour
     }
     void value()
     {
-        if (shake)
+        if (camShake != null)
         {
-            Camera.GetComponent<CameraShake>().shake = true;
+            if (shake) camShake.shake = true;
+            else camShake.shake = false;
         }
-        else
-        {
-            Camera.GetComponent<CameraShake>().shake = false;
-        }
+        
         if (pron)
         {
             player.GetComponent<SpriteRenderer>().enabled = true;
@@ -99,6 +116,7 @@ public class BossMovement : MonoBehaviour
         {
             player.GetComponent<SpriteRenderer>().enabled = false;
         }
+
         if (Trigger)
         {
             player.GetComponent<PlayerMovement>().Trigger = true;
@@ -125,7 +143,8 @@ public class BossMovement : MonoBehaviour
     {
         if (ready)
         {
-            if (transform.position.x < 0 && transform.position.x > -2 && cool[0] == 1 || transform.position.x > 0 && transform.position.x < 2 && cool[0] == 1)
+            if (transform.position.x < 0 && transform.position.x > -2 && cool[0] == 1
+                || transform.position.x > 0 && transform.position.x < 2 && cool[0] == 1)
             {
                 stop = true;
                 canWalk = false;
@@ -329,5 +348,31 @@ public class BossMovement : MonoBehaviour
         stop = false;
         ready = true;
         changedir = true;
+    }
+    public void PlayerDead()
+    {
+        canWalk = false;
+        ready = false;
+    }
+    void SpecialSkillStart()
+    {
+        stopUpdate = true;
+        specialSkillUsed = true;
+        hitBoxCol.enabled = false;
+        anim.SetTrigger("specialStart");
+        anim.SetBool("Force", true);
+    }
+    public void SpecialSkill()
+    {
+        // 여기서 애니메이션 콜해서 움직임
+    }
+    void SpecialSkillEnd()
+    {
+        hitBoxCol.enabled = true;
+        anim.SetTrigger("specialEnd");
+    }
+    void ForceOff()
+    {
+        anim.SetBool("Force", false);
     }
 }

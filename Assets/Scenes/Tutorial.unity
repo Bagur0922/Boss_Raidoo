@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 379078694}
   - component: {fileID: 379078693}
   - component: {fileID: 379078695}
+  - component: {fileID: 379078696}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -321,7 +322,31 @@ MonoBehaviour:
   - "\uC2A4\uD398\uC774\uC2A4\uBC14\uB85C \uAD6C\uB974\uAE30"
   - "Z\uB85C \uACF5\uACA9"
   - "\uC5D4\uD130\uB85C \uB808\uC774\uB4DC \uC2DC\uC791"
+  fadeDelay: 0.5
   curState: 0
+  needWalkTime: 3
+  needRollCnt: 3
+  needAtkCnt: 3
+--- !u!95 &379078696
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379078691}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 96dc02efb0a5e2a49bf1b2ce1df6bb66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &433772968
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,12 +453,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 960, y: 540}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -557,6 +582,8 @@ MonoBehaviour:
   fly: {fileID: 21300000, guid: f04a74b81d455214c8228a3508e78112, type: 3}
   shake: 0
   tuto: 1
+  restartMessage: {fileID: 0}
+  clearImage: {fileID: 0}
   boss: {fileID: 1251097955}
   Camera: {fileID: 1425675413}
   speed: 7

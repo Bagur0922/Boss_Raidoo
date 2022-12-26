@@ -7,24 +7,26 @@ public class Ghost_Effect : MonoBehaviour
     [SerializeField] bool pb; //true면 플레이어, false면 보스
 
     public GameObject player;
+    PlayerMovement playerM;
     public SpriteRenderer psr;
     public SpriteRenderer sr;
 
     public float delay;
-    // Start is called before the first frame update
+
     void Start()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
+        playerM = player.GetComponent<PlayerMovement>();
         StartCoroutine(move());
         sr.enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (playerM == null) return;
         if (pb)
         {
-            if (!player.GetComponent<PlayerMovement>().ghosting)
+            if (!playerM.ghosting)
             {
                 sr.enabled = false;
             }
@@ -35,9 +37,9 @@ public class Ghost_Effect : MonoBehaviour
         }
         else if (!pb)
         {
-            if(player.GetComponent<BossMovement>() != null)
+            if(playerM != null)
             {
-                if (!player.GetComponent<BossMovement>().ghosting)
+                if (!playerM.ghosting)
                 {
                     sr.enabled = false;
                 }
@@ -50,35 +52,36 @@ public class Ghost_Effect : MonoBehaviour
     }
     IEnumerator move()
     {
-        while (true)
-        {
-            if (pb)
+        if (playerM != null)
+            while (true)
             {
-                gameObject.transform.position = player.transform.position; sr.sprite = psr.sprite;
-                if (player.GetComponent<PlayerMovement>().direction)
+                if (pb)
                 {
-                    transform.localScale = new Vector3(1, 1, 1);
+                    gameObject.transform.position = player.transform.position; sr.sprite = psr.sprite;
+                    if (playerM.direction)
+                    {
+                        transform.localScale = new Vector3(1, 1, 1);
+                    }
+                    else if (!playerM.direction)
+                    {
+                        transform.localScale = new Vector3(-1, 1, 1);
+                    }
+                    yield return new WaitForSeconds(delay);
                 }
-                else if (!player.GetComponent<PlayerMovement>().direction)
+                else if (!pb)
                 {
-                    transform.localScale = new Vector3(-1, 1, 1);
+                    gameObject.transform.position = player.transform.position; sr.sprite = psr.sprite;
+                    if (playerM.direction)
+                    {
+                        transform.localScale = new Vector3(1, 1, 1);
+                    }
+                    else if (!playerM.direction)
+                    {
+                        transform.localScale = new Vector3(-1, 1, 1);
+                    }
+                    yield return new WaitForSeconds(delay);
                 }
-                yield return new WaitForSeconds(delay);
             }
-            else if (!pb)
-            {
-                gameObject.transform.position = player.transform.position; sr.sprite = psr.sprite;
-                if (player.GetComponent<BossMovement>().direction)
-                {
-                    transform.localScale = new Vector3(1, 1, 1);
-                }
-                else if (!player.GetComponent<BossMovement>().direction)
-                {
-                    transform.localScale = new Vector3(-1, 1, 1);
-                }
-                yield return new WaitForSeconds(delay);
-            }
-        }
         
     }
 }

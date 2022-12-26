@@ -13,7 +13,7 @@ public class p_HitBox : MonoBehaviour
     void Start()
     {
         playerMovement = player.GetComponent<PlayerMovement>();
-        hpUI = health.GetComponent<HP>();
+        if (health != null) hpUI = health.GetComponent<HP>();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

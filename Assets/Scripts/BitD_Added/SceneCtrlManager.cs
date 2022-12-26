@@ -27,4 +27,10 @@ public class SceneCtrlManager : MonoBehaviour
     {
         SceneManager.LoadScene(es.ToString());
     }
+
+    public void ReloadGame()
+    {
+        SoundPlayer.instance.init();
+        SceneManager.LoadScene("Game");
+    }
 }

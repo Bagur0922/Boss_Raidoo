@@ -146,7 +146,7 @@ public class SoundPlayer : MonoBehaviour
         PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 
-    void init(){
+    public void init(){
         bgmSource.Stop();
         nowPlaying = null;
         trackNum = 0;
