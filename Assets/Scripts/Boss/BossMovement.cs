@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossMovement : MonoBehaviour
+public partial class BossMovement : MonoBehaviour
 {
     Animator anim;
     SpriteRenderer sr;
@@ -18,6 +18,7 @@ public class BossMovement : MonoBehaviour
     [SerializeField] GameObject Dagger;
     [SerializeField] Transform daggerPoint;
     [SerializeField] BoxCollider2D hitBoxCol;
+
 
     float xmove;
     float thunderpos;
@@ -360,22 +361,6 @@ public class BossMovement : MonoBehaviour
     {
         canWalk = false;
         ready = false;
-    }
-    void SpecialSkillStart()
-    {
-        stopUpdate = true;
-        specialSkillUsed = true;
-        hitBoxCol.enabled = false;
-        anim.SetTrigger("specialStart");
-        anim.SetBool("Force", true);
-
-        // 깻잎 22-12-27
-        // 공중에 뜨는것을 가운데서 시작할 수 있도록 수정
-        transform.position = new Vector3(0f, transform.position.y, transform.position.z);
-    }
-    public void SpecialSkill()
-    {
-        // 여기서 애니메이션 콜해서 움직임
     }
     void SpecialSkillEnd()
     {

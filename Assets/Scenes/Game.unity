@@ -329,6 +329,9 @@ MonoBehaviour:
   counteren: 1
   specialSkillUsed: 0
   cool: 010000000100000001000000
+  prefab_Lighting_Big: {fileID: 4488137264829344064, guid: 399a1be3619e6c046aec0cb4e665217a, type: 3}
+  prefab_Lighting_Small: {fileID: 4488137264829344064, guid: 663cfa5386363fc49bd8acbca59ab6f1, type: 3}
+  LightingSpawnPos: {fileID: 0}
 --- !u!212 &63025939
 SpriteRenderer:
   m_ObjectHideFlags: 0
