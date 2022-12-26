@@ -78,6 +78,10 @@ public class BossMovement : MonoBehaviour
         playerMovement.counteranyaction = true;
         startg = true;
     }
+
+    // 깻잎 22-12-27
+    // 움직이는 TimeTick
+
     void Update()
     {
         if (stopUpdate || isDead) return;
@@ -310,7 +314,10 @@ public class BossMovement : MonoBehaviour
     {
         if (okd)
         {
-            hp = hp - 5;
+            // 깻잎 22-12-27
+            // 상수값 치환
+            // hp = hp - 5;
+            hp -= ConstantValue.player_attack_damage;
             bar.GetComponent<Image>().fillAmount = hp / 100;
             okd = false;
         }
@@ -361,6 +368,10 @@ public class BossMovement : MonoBehaviour
         hitBoxCol.enabled = false;
         anim.SetTrigger("specialStart");
         anim.SetBool("Force", true);
+
+        // 깻잎 22-12-27
+        // 공중에 뜨는것을 가운데서 시작할 수 있도록 수정
+        transform.position = new Vector3(0f, transform.position.y, transform.position.z);
     }
     public void SpecialSkill()
     {
