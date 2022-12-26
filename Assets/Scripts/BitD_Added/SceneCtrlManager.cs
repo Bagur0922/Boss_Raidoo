@@ -19,7 +19,8 @@ public class SceneCtrlManager : MonoBehaviour
 
     private void Awake()
     {
-        uniqueInstance = this;
+        if (uniqueInstance == null) uniqueInstance = this;
+        else Destroy(this.gameObject);
         DontDestroyOnLoad(this);
     }
 

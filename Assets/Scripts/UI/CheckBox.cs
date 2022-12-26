@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class CheckBox : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    GameObject onObj;
+    GameObject offObj;
+    private void Awake()
     {
-        
+        offObj = transform.GetChild(0).gameObject;
+        onObj = transform.GetChild(1).gameObject;
+
+        offObj.SetActive(true);
+        onObj.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CheckSet(bool state)
     {
-        
+        if (state)
+        {
+            offObj.SetActive(false);
+            onObj.SetActive(true);
+        }
+        else
+        {
+            offObj.SetActive(true);
+            onObj.SetActive(false);
+
+        }
     }
 }
