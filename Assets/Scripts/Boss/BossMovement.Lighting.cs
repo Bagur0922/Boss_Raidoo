@@ -38,7 +38,8 @@ public partial class BossMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // 공중에 뜨는것을 가운데서 시작할 수 있도록 수정
-        ForceMoveInit(transform.position, new Vector3(0f, transform.position.y, transform.position.z), 2f);
+        float walk_time_calc = 0.2f * Mathf.Abs(transform.position.x); // 위치에 따른 걸어가는 시간 비례 계산
+        ForceMoveInit(transform.position, new Vector3(0f, transform.position.y, transform.position.z), walk_time_calc);
         // 도착할때까지 대기
 
         yield return new WaitUntil(() => isForceMoveStart == false);
