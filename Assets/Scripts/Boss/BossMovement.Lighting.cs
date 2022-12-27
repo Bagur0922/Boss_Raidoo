@@ -45,6 +45,7 @@ public partial class BossMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         // 가장 큰 원기옥 소환
+        CameraShake.I.DoShake(2f);
         GameObject big = Instantiate(prefab_Lighting_Big);
         big.transform.position = ConstantValue.lighting_big_origin_pos;
 
@@ -67,9 +68,7 @@ public partial class BossMovement : MonoBehaviour
         }
         anim.SetTrigger("specialEnd");
 
-        CameraShake.I.shake = true;
         yield return new WaitForSeconds(1.0f);
-        CameraShake.I.shake = false;
 
         Vector3 BigcalcEndPos = new Vector3(
                 player.transform.position.x,
@@ -78,10 +77,10 @@ public partial class BossMovement : MonoBehaviour
         LightingMove script_big = big.GetComponent<LightingMove>();
         script_big.MoveStart(big.transform.position, BigcalcEndPos);
 
-        yield return new WaitForSeconds(2f);
+        // 큰 원기옥이 사라질때까지 대기
+        yield return new WaitUntil(() => big == null);
 
         // 종료
-
         stopUpdate = false;
         specialSkillUsed = false;
         hitBoxCol.enabled = true;
