@@ -961,7 +961,7 @@ MonoBehaviour:
   restartMessage: {fileID: 1294485731}
   clearImage: {fileID: 501367506}
   clearTimeText: {fileID: 2010444896}
-  sm: {fileID: 0}
+  sm: {fileID: 926705780}
   boss: {fileID: 63025934}
   Camera: {fileID: 1231143541}
   speed: 7

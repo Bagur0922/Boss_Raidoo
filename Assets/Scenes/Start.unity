@@ -861,6 +861,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3810556154046107336, guid: 1a5362a826f911045a096900ae888829, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810556154046107337, guid: 1a5362a826f911045a096900ae888829, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810556154046107342, guid: 1a5362a826f911045a096900ae888829, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d2205401efee7f6479b7b14c569a4c50, type: 3}
+    - target: {fileID: 3810556154046107342, guid: 1a5362a826f911045a096900ae888829, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810556154046107342, guid: 1a5362a826f911045a096900ae888829, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 3810556155275990825, guid: 1a5362a826f911045a096900ae888829, type: 3}
       propertyPath: m_Name
       value: Duru
