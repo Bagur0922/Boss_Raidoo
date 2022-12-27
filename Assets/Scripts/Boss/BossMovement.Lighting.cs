@@ -24,12 +24,6 @@ public partial class BossMovement : MonoBehaviour
         stopUpdate = true;
         specialSkillUsed = true;
         hitBoxCol.enabled = false;
-        anim.SetTrigger("specialStart");
-        anim.SetBool("Force", true);
-
-        // 깻잎 22-12-27
-        // 공중에 뜨는것을 가운데서 시작할 수 있도록 수정
-        transform.position = new Vector3(0f, transform.position.y, transform.position.z);
 
         // 원기옥 코루틴 시작 체크
         isPlayspecialSkill = true;
@@ -39,10 +33,21 @@ public partial class BossMovement : MonoBehaviour
     bool isPlayspecialSkill = false;
     public IEnumerator SpecialSkill()
     {
-        // 여기서 애니메이션 콜해서 움직임
-
         // 떠오를 동안 대기시간 1초
-        yield return new WaitForSeconds(2f);
+        anim.SetBool("isWalking", true);
+        yield return new WaitForSeconds(1f);
+
+        // 공중에 뜨는것을 가운데서 시작할 수 있도록 수정
+        ForceMoveInit(transform.position, new Vector3(0f, transform.position.y, transform.position.z), 2f);
+        // 도착할때까지 대기
+
+        yield return new WaitUntil(() => isForceMoveStart == false);
+
+        anim.SetTrigger("specialStart");
+        anim.SetBool("Force", true);
+        anim.SetBool("isWalking", false);
+        // 떠오를 동안 대기시간 1초
+        yield return new WaitForSeconds(1f);
 
         // 가장 큰 원기옥 소환
         CameraShake.I.DoShake(2f);

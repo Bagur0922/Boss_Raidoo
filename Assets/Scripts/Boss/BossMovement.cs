@@ -80,12 +80,20 @@ public partial class BossMovement : MonoBehaviour
         startg = true;
     }
 
-    // ²¢ÀÙ 22-12-27
-    // ¿òÁ÷ÀÌ´Â TimeTick
-
     void Update()
     {
-        if (stopUpdate || isDead) return;
+
+        if (isDead)
+            return;
+
+        if (isForceMoveStart == true)
+        {
+            ForceMove();
+        }
+
+        if (stopUpdate) 
+            return;
+
         if (hp <= 0)
         {
             anim.SetTrigger("die");
