@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LightingMove : MonoBehaviour
 {
+    public bool attacking = true;
+
     // Move Values
     public float movet = 0f;
     public float moveSpeed = 1f;
@@ -17,6 +19,13 @@ public class LightingMove : MonoBehaviour
         endPoint = end;
 
         isMoveStart = true;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
