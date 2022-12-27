@@ -50,8 +50,6 @@ public partial class BossMovement : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-
-
         for (int a = 0; a < 15; a++)
         {
             GameObject small = Instantiate(prefab_Lighting_Small);
@@ -65,14 +63,13 @@ public partial class BossMovement : MonoBehaviour
                 ConstantValue.lighting_small_end_pos.z);
             script.MoveStart(big.transform.position, calcEndPos);
 
-            /*
-            small.transform.position = new Vector3(
-                big.transform.position.x + UnityEngine.Random.Range(-5f, 5f),
-                big.transform.position.y + UnityEngine.Random.Range(-5f, 5f),
-                big.transform.position.z);
-                */
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(1f);
         }
+        anim.SetTrigger("specialEnd");
+
+        CameraShake.I.shake = true;
+        yield return new WaitForSeconds(1.0f);
+        CameraShake.I.shake = false;
 
         Vector3 BigcalcEndPos = new Vector3(
                 player.transform.position.x,
@@ -83,10 +80,11 @@ public partial class BossMovement : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
+        // Á¾·á
+
         stopUpdate = false;
         specialSkillUsed = false;
         hitBoxCol.enabled = true;
         anim.SetBool("Force", false);
-        anim.SetTrigger("specialEnd");
     }
 }

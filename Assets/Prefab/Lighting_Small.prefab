@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movet: 0
-  moveSpeed: 1.5
+  moveSpeed: 0.33333334
   startPoint: {x: 0, y: 0, z: 0}
   endPoint: {x: 0, y: 0, z: 0}
   isMoveStart: 0
