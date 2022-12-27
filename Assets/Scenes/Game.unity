@@ -329,9 +329,17 @@ MonoBehaviour:
   counteren: 1
   specialSkillUsed: 0
   cool: 010000000100000001000000
+  movet: 0
+  moveSpeed: 1
+  startPoint: {x: 0, y: 0, z: 0}
+  endPoint: {x: 0, y: 0, z: 0}
+  isForceMoveStart: 0
   prefab_Lighting_Big: {fileID: 4488137264829344064, guid: 399a1be3619e6c046aec0cb4e665217a, type: 3}
   prefab_Lighting_Small: {fileID: 4488137264829344064, guid: 663cfa5386363fc49bd8acbca59ab6f1, type: 3}
-  LightingSpawnPos: {fileID: 0}
+  particle_teleport_on: {fileID: 2168464281549524564, guid: 759959d977a83f1479d73ad6893b21be, type: 3}
+  particle_teleport_off: {fileID: 388272731275440395, guid: 3ceb133d16c086042aa03b8db06b9137, type: 3}
+  particle_light_explosion: {fileID: 628440195191580603, guid: 148c0d87bc62d5c43b21497f972f6920, type: 3}
+  isPlayspecialSkill: 0
 --- !u!212 &63025939
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2700,6 +2708,7 @@ MonoBehaviour:
   m_offset: {x: 1, y: 1, z: 0}
   shake: 0
   Shaking: 0
+  shaketime: 0
 --- !u!1 &1294485731
 GameObject:
   m_ObjectHideFlags: 0

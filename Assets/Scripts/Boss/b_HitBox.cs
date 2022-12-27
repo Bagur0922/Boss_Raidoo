@@ -64,6 +64,9 @@ public class b_HitBox : MonoBehaviour
         if (damage && bossM.damage && Mathf.Abs(distance) < 3.6f
             && playerM.isAttacking)
         {
+            if(bossM.isPlayspecialSkill == true)
+                return;
+
             StartCoroutine(bossM.down());
         }
         else if(counter && bossM.damage && bossM.ready

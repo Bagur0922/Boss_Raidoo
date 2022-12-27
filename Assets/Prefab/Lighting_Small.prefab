@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attacking: 1
   movet: 0
-  moveSpeed: 0.33333334
+  moveSpeed: 0.6666
   startPoint: {x: 0, y: 0, z: 0}
   endPoint: {x: 0, y: 0, z: 0}
   isMoveStart: 0
