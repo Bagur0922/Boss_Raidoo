@@ -71,8 +71,7 @@ public partial class BossMovement : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
         }
-        anim.SetTrigger("specialEnd");
-
+        anim.SetTrigger("specialHandMotion");
         yield return new WaitForSeconds(1.0f);
 
         Vector3 BigcalcEndPos = new Vector3(
@@ -85,9 +84,12 @@ public partial class BossMovement : MonoBehaviour
         // 큰 원기옥이 사라질때까지 대기
         yield return new WaitUntil(() => big == null);
 
+        // 내려올때까지 대기
+        anim.SetTrigger("specialEnd");
+        yield return new WaitForSeconds(2f);
+
         // 종료
         stopUpdate = false;
-        specialSkillUsed = false;
         hitBoxCol.enabled = true;
         anim.SetBool("Force", false);
     }
