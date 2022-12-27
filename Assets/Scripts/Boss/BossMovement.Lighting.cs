@@ -35,6 +35,7 @@ public partial class BossMovement : MonoBehaviour
     }
 
     public bool isPlayspecialSkill = false;
+    public bool special_skill_end = false;
     public IEnumerator SpecialSkill()
     {
         // 떠오를 동안 대기시간 1초
@@ -114,6 +115,7 @@ public partial class BossMovement : MonoBehaviour
         stopUpdate = false;
         hitBoxCol.enabled = true; 
         GetComponent<BoxCollider2D>().enabled = true;
-        anim.SetBool("Force", false);
+        anim.SetBool("Force", false); 
+        special_skill_end = true;
     }
 }
