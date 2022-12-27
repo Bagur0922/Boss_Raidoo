@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraShake : MonoBehaviour
+// ≤¢¿Ÿ 22-12-27
+// ΩÃ±€≈œ¿∏∑Œ ∫Ø∞Ê
+public class CameraShake : BehaviourSingleton<CameraShake>
 {
     [SerializeField] float m_force = 0f;
     [SerializeField] Vector3 m_offset = Vector3.zero;
