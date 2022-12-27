@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject clearImage;
     [SerializeField] TextMeshProUGUI clearTimeText;
     [SerializeField] SettingManager sm;
+    [SerializeField] AudioClip deadClip;
 
     public GameObject boss;
     BossMovement bossM;
@@ -287,6 +288,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isDead = true;
         anim.SetTrigger("Dead");
+        if (deadClip != null) SoundPlayer.instance.startSFX(deadClip);
         StartCoroutine(Restart());
         bossM.PlayerDead();
     }

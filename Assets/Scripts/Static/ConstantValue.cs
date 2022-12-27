@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class ConstantValue
 {
-    public static readonly float player_attack_damage = 70f;
+    public static readonly float player_attack_damage = 5f;
 
     #region 원기옥 관련 상수값
     public static readonly Vector3 lighting_big_origin_pos = new Vector3(0.55f, 7.00f, 0f);

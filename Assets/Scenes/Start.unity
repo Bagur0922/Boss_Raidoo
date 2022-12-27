@@ -541,6 +541,9 @@ MonoBehaviour:
   - name: walk
     audios:
     - {fileID: 8300000, guid: f23bc41e6ad5f6243bd29b6ae229ca72, type: 3}
+  - name: die
+    audios:
+    - {fileID: 8300000, guid: c44cc71d92486c74daef54c795a571e8, type: 3}
   bgmSource: {fileID: 1632380529}
   sfxSource: {fileID: 408371817}
   BGMvolume: 0
@@ -873,6 +876,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d2205401efee7f6479b7b14c569a4c50, type: 3}
+    - target: {fileID: 3810556154046107342, guid: 1a5362a826f911045a096900ae888829, type: 3}
+      propertyPath: m_DrawMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3810556154046107342, guid: 1a5362a826f911045a096900ae888829, type: 3}
       propertyPath: m_SortingOrder
       value: 2

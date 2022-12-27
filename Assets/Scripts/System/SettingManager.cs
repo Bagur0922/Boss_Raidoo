@@ -16,8 +16,12 @@ public class SettingManager : MonoBehaviour
     [SerializeField] BossMovement boss;
     [SerializeField] GameObject settingObj;
     [SerializeField] Transform settingImgRoot;
+    [SerializeField] GameObject settingDuru;
+    [SerializeField] GameObject HPCanvas;
+    [SerializeField] StartMove duru;
     List<GameObject> settingImgs = new List<GameObject>();
     bool uiOn = false;
+    bool settingOn = false;
     ePauseSelect curIdx;
 
 
@@ -25,6 +29,8 @@ public class SettingManager : MonoBehaviour
     {
         curIdx = ePauseSelect.Continue;
         settingObj.SetActive(false);
+        settingDuru.SetActive(true);
+        HPCanvas.SetActive(true);
         for (int i = 0; i < settingImgRoot.childCount; i++)
         {
             settingImgs.Add(settingImgRoot.GetChild(i).gameObject);
@@ -37,7 +43,7 @@ public class SettingManager : MonoBehaviour
             timer += Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && Time.timeScale == 1)
+        if (Input.GetKeyDown(KeyCode.Escape) && !uiOn)
         {
             uiOn = true;
             settingObj.SetActive(true);
@@ -45,41 +51,55 @@ public class SettingManager : MonoBehaviour
             CurTargetSet(curIdx);
             Time.timeScale = 0;
         }
-        else if(Time.timeScale == 0 && Input.GetKeyDown(KeyCode.Escape))
+        else if(uiOn && Input.GetKeyDown(KeyCode.Escape))
         {
-            uiOn = false;
-            settingObj.SetActive(false);
-            Time.timeScale = 1;
+            if (settingOn)
+            {
+                VolumeSetting(false);
+            }
+            else
+            {
+                uiOn = false;
+                settingObj.SetActive(false);
+                Time.timeScale = 1;
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && uiOn)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && uiOn && !settingOn)
         {
             curIdx--;
             if (curIdx < ePauseSelect.Continue) curIdx = ePauseSelect.Quit;
             CurTargetSet(curIdx);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && uiOn)
+        else if (Input.GetKeyDown(KeyCode.DownArrow) && uiOn && !settingOn)
         {
             curIdx++;
             if (curIdx > ePauseSelect.Quit) curIdx = ePauseSelect.Continue;
             CurTargetSet(curIdx);
         }
-        else if (Input.GetKeyDown(KeyCode.Return) && uiOn)
+        else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && uiOn && !settingOn)
         {
-            uiOn = false;
-            settingObj.SetActive(false);
-            Time.timeScale = 1;
             switch (curIdx)
             {
                 case ePauseSelect.Continue:
+                    uiOn = false;
+                    settingObj.SetActive(false);
+                    Time.timeScale = 1;
                     break;
                 case ePauseSelect.Restart:
-                    SceneCtrlManager.ins.LoadScene(eScene.Game);
+                    uiOn = false;
+                    settingObj.SetActive(false);
+                    Time.timeScale = 1;
+                    SceneCtrlManager.ins.ReloadGame();
                     break;
                 case ePauseSelect.Setting:
-                    // ¼¼ÆÃ......
+                    VolumeSetting(true);
                     break;
                 case ePauseSelect.Title:
+                    uiOn = false;
+                    settingObj.SetActive(false);
+                    Time.timeScale = 1;
+                    SoundPlayer.instance.init();
                     SceneCtrlManager.ins.LoadScene(eScene.Start);
                     break;
                 case ePauseSelect.Quit:
@@ -101,5 +121,14 @@ public class SettingManager : MonoBehaviour
             if (i == target) settingImgs[i].SetActive(true);
             else settingImgs[i].SetActive(false);
         }
+    }
+    void VolumeSetting(bool setState)
+    {
+        settingDuru.SetActive(setState);
+        HPCanvas.SetActive(!setState);
+        settingObj.SetActive(!setState);
+        settingOn = setState;
+        if (setState) duru.DaggerOn();
+        else duru.DaggerOff();
     }
 }

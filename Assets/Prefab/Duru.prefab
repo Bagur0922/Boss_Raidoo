@@ -1134,6 +1134,7 @@ MonoBehaviour:
   - {fileID: 3810556155928151889}
   - {fileID: 3810556155116478027}
   creditObj: {fileID: 3810556154046107336}
+  curTitleType: 0
 --- !u!114 &3810556155275990818
 MonoBehaviour:
   m_ObjectHideFlags: 0

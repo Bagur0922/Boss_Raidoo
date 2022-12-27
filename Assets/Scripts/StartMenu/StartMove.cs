@@ -31,7 +31,7 @@ public class StartMove : MonoBehaviour
     int[] curVolTarget = new int[3];
 
     bool canStart;
-    eTitleType curTitleType;
+    public eTitleType curTitleType;
     eOptionType curOptionType;
 
     void Start()
@@ -50,6 +50,7 @@ public class StartMove : MonoBehaviour
         {
             curTitleType = eTitleType.Option;
             curOptionType = eOptionType.Master;
+            gameObject.SetActive(false);
             OptionInitSet();
             return;
         }
@@ -72,7 +73,7 @@ public class StartMove : MonoBehaviour
         switch (curTitleType)
         {
             case eTitleType.Main:
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
                 {
                     // 이쪽이 확정키라고 생각하고 진행함
                     switch (selecting)
@@ -122,6 +123,7 @@ public class StartMove : MonoBehaviour
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
+                    Debug.Log("Click Good");
                     int tmp = curVolTarget[(int)curOptionType];
                     curVolTarget[(int)curOptionType] = tmp - 1 >= 0 ? --tmp : 0;
                     optionDagger.transform.position = volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]].position;
@@ -130,6 +132,7 @@ public class StartMove : MonoBehaviour
                 }
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
+                    Debug.Log("Click Good");
                     int tmp = curVolTarget[(int)curOptionType];
                     curVolTarget[(int)curOptionType] = tmp + 1 <= 8 ? ++tmp : 8;
                     optionDagger.transform.position = volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]].position;
@@ -155,10 +158,30 @@ public class StartMove : MonoBehaviour
 
     public void DaggerOn()
     {
+        if (onlyOption)
+        {
+            canStart = true;
+            curTitleType = eTitleType.Option;
+            curOptionType = eOptionType.Master;
+        }
         curVolTarget[(int)eOptionType.Master] = (int)Mathf.Round(SoundPlayer.instance.masterVInt);
         curVolTarget[(int)eOptionType.BGM] = (int)Mathf.Round(SoundPlayer.instance.bgmVInt);
         curVolTarget[(int)eOptionType.SFX] = (int)Mathf.Round(SoundPlayer.instance.sfxVInt);
         optionDagger.SetActive(true);
+        //Debug.LogFormat("{0} // {1} // {2}", optionDagger, curVolTarget[(int)curOptionType], volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]]);
+        if (volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]] == null)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Transform tmp = volPosRoot.GetChild(i);
+                for (int j = 0; j < 9; j++)
+                {
+
+                    volumePos[i, j] = tmp.GetChild(j);
+                    Debug.Log(volumePos[i, j].name);
+                }
+            }
+        }
         optionDagger.transform.position = volumePos[(int)curOptionType, curVolTarget[(int)curOptionType]].position;
         for (int i = 0; i < optionTarget.Length; i++)
         {

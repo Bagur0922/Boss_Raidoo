@@ -64,7 +64,7 @@ public class Tuto_text : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SceneCtrlManager.ins.LoadScene(eScene.Game);
+            SceneCtrlManager.ins.LoadScene(eScene.Game, true);
         }
         cvgAnim.speed = 1 / fadeDelay;
     }
