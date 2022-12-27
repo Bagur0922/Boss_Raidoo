@@ -1801,6 +1801,7 @@ MonoBehaviour:
   restartMessage: {fileID: 0}
   clearImage: {fileID: 0}
   clearTimeText: {fileID: 0}
+  sm: {fileID: 0}
   boss: {fileID: 1251097955}
   Camera: {fileID: 1425675413}
   speed: 7
@@ -2022,6 +2023,8 @@ MonoBehaviour:
   m_force: 0
   m_offset: {x: 0, y: 0, z: 0}
   shake: 0
+  Shaking: 0
+  shaketime: 0
 --- !u!1 &1428117476
 GameObject:
   m_ObjectHideFlags: 0

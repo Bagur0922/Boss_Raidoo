@@ -19,7 +19,8 @@ public class StartMove : MonoBehaviour
 {
     Animator anim;
     SpriteRenderer sr;
-
+    AniSoundPlayer ownSound;
+    [SerializeField] bool onlyOption = false;
     [SerializeField] List<Sprite> now;
     [SerializeField] int selecting = 1; //1은 시작, 2는 설정 3은 크레딧
     [SerializeField] Transform volPosRoot;
@@ -35,20 +36,30 @@ public class StartMove : MonoBehaviour
 
     void Start()
     {
-        anim = GetComponent<Animator>();
-        sr = GetComponent<SpriteRenderer>();
-        canStart = false;
-        curTitleType = eTitleType.Main;
-        curOptionType = eOptionType.Master;
         for (int i = 0; i < 3; i++)
         {
             Transform tmp = volPosRoot.GetChild(i);
             for (int j = 0; j < 9; j++)
             {
-                
+
                 volumePos[i, j] = tmp.GetChild(j);
             }
         }
+
+        if (onlyOption)
+        {
+            curTitleType = eTitleType.Option;
+            curOptionType = eOptionType.Master;
+            OptionInitSet();
+            return;
+        }
+        anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
+        ownSound = GetComponent<AniSoundPlayer>();
+        canStart = false;
+        curTitleType = eTitleType.Main;
+        curOptionType = eOptionType.Master;
+        
         OptionInitSet();
         creditObj.SetActive(false);
         Time.timeScale = 1f;
@@ -67,6 +78,7 @@ public class StartMove : MonoBehaviour
                     switch (selecting)
                     {
                         case 1:
+                            SoundPlayer.instance.init();
                             SceneCtrlManager.ins.LoadScene(eScene.Tutorial);
                             break;
                         case 2:

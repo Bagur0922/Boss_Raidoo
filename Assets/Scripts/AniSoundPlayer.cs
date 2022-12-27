@@ -15,6 +15,6 @@ public class AniSoundPlayer : MonoBehaviour
     }
     public void playBGMwithString(string name)
     { // 이름으로 사운드 실행
-        SoundPlayer.instance.startBGM("Start");
+        SoundPlayer.instance.startBGM(name);
     }
 }

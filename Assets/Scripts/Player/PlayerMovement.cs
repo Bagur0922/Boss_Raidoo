@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject restartMessage;
     [SerializeField] GameObject clearImage;
     [SerializeField] TextMeshProUGUI clearTimeText;
+    [SerializeField] SettingManager sm;
 
     public GameObject boss;
     BossMovement bossM;
@@ -49,8 +50,6 @@ public class PlayerMovement : MonoBehaviour
 
     bool isDead = false;
     bool isClear = false;
-
-    float timer;
     
     void Start()
     {
@@ -106,8 +105,6 @@ public class PlayerMovement : MonoBehaviour
         {
             roll();
         }
-
-        timer += Time.deltaTime;
     }
     void value()
     {
@@ -322,7 +319,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isClear = true;
         clearImage.SetActive(true);
-        int tmpTime = Mathf.RoundToInt(timer);
+        int tmpTime = Mathf.RoundToInt(sm.timer);
         clearTimeText.text = string.Format("클리어\n\n걸린 시간\n{0}분 {1}초", tmpTime / 60, tmpTime % 60);
         SoundPlayer.instance.init();
     }
