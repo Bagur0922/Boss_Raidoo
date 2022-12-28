@@ -10,6 +10,7 @@ public partial class BossMovement : MonoBehaviour
     Rigidbody2D rb;
 
     public GameObject player;
+    HP hpUI;
     PlayerMovement playerMovement;
     public GameObject Camera;
     CameraShake camShake;
@@ -19,6 +20,7 @@ public partial class BossMovement : MonoBehaviour
     [SerializeField] Transform daggerPoint;
     [SerializeField] BoxCollider2D hitBoxCol;
 
+    public GameObject health;
 
     float xmove;
     float thunderpos;
@@ -34,6 +36,7 @@ public partial class BossMovement : MonoBehaviour
     bool okd = true;
     bool stopUpdate = false;
     bool isDead = false;
+    bool kill = false;
 
     [SerializeField]bool changedir = true;
     [SerializeField]bool canWalk = false;
@@ -67,7 +70,7 @@ public partial class BossMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-
+        if (health != null) hpUI = health.GetComponent<HP>();
         StartCoroutine(start());
     }
     IEnumerator start()
@@ -115,7 +118,7 @@ public partial class BossMovement : MonoBehaviour
         }
         else if(!specialSecondSkillUsed && hp / maxHp <= 0.3f)
         {
-            specialFirstSkillUsed = false;
+            specialSecondSkillUsed = true;
             SpecialSkillStart();
             return;
         }
@@ -228,7 +231,8 @@ public partial class BossMovement : MonoBehaviour
     {
         cool[2] = 0;
         anim.SetTrigger("attack");
-        yield return new WaitForSeconds(2/3);
+        yield return new WaitForSeconds(1.25f);
+        anim.SetTrigger("nattack_end");
         StartCoroutine(cooldown(2, 2.5f));
         stop = false;
         if (downback)
@@ -329,14 +333,17 @@ public partial class BossMovement : MonoBehaviour
         canWalk = true;
         ready = true;
         changedir = true;
-        cool[1] = 1;
-        StartCoroutine(roll());
+        damage = true;
         yield return null;
     }
     IEnumerator damaged()
     {
         if (okd)
         {
+            if (kill)
+            {
+                hpUI.Damaged();
+            }
             // ²¢ÀÙ 22-12-27
             // »ó¼ö°ª Ä¡È¯
             // hp = hp - 5;
@@ -344,8 +351,11 @@ public partial class BossMovement : MonoBehaviour
             bar.GetComponent<Image>().fillAmount = hp / 100;
             okd = false;
         }
+        kill = true;
         yield return new WaitForSeconds(1.5f);
         okd = true;
+        yield return new WaitForSeconds(0.7f);
+        kill = false;
     }
     public IEnumerator counter()
     {
@@ -364,7 +374,6 @@ public partial class BossMovement : MonoBehaviour
         yield return new WaitForSeconds(time);
         cool[skill] = 1;
     }
-    
     public void ThrowDagger()
     {
         var instance = Instantiate(Dagger);

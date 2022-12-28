@@ -314,6 +314,7 @@ MonoBehaviour:
   Dagger: {fileID: 4488137264829344064, guid: eb5d52dae9254a142bf120470d494f77, type: 3}
   daggerPoint: {fileID: 239959796}
   hitBoxCol: {fileID: 967789787}
+  health: {fileID: 558610041}
   maxHp: 100
   hp: 100
   changedir: 1

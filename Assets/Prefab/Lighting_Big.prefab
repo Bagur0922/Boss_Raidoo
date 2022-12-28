@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1707395036816737419}
   - component: {fileID: 281733619286008597}
   - component: {fileID: 2126420826900329110}
+  - component: {fileID: 276104823782818639}
   m_Layer: 0
   m_Name: Lighting_Big
   m_TagString: b_AttackBox
@@ -141,3 +142,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.52
+--- !u!114 &276104823782818639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488137264829344064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cdcac783efe1cf4999ed35b9f434165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

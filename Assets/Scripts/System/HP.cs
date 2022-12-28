@@ -11,11 +11,22 @@ public class HP : MonoBehaviour
 
     public int health = 3;
 
+    bool canD = true;
+
     public void Damaged()
     {
-        health--;
-        Hearts[health].SetActive(false);
-        if (health <= 0) player.Dead();
+        if (canD)
+        {
+            canD = false;
+            health--;
+            Hearts[health].SetActive(false);
+            if (health <= 0) player.Dead();
+            Invoke("backD", 4 / 12);
+        }
+    }
+    void backD()
+    {
+        canD = true;
     }
     public void InitSet()
     {

@@ -544,6 +544,27 @@ MonoBehaviour:
   - name: die
     audios:
     - {fileID: 8300000, guid: c44cc71d92486c74daef54c795a571e8, type: 3}
+  - name: run
+    audios:
+    - {fileID: 8300000, guid: 0432afc07eebb5f46b8e9f958247bf7a, type: 3}
+  - name: slash
+    audios:
+    - {fileID: 8300000, guid: 04cc9388248a13d45a7f92be65b4e7fc, type: 3}
+  - name: disa
+    audios:
+    - {fileID: 8300000, guid: 6ded67d702ba85a41b74d5d69404372b, type: 3}
+  - name: appe
+    audios:
+    - {fileID: 8300000, guid: 0537646bfc988a94987454fafe94da4f, type: 3}
+  - name: charg
+    audios:
+    - {fileID: 8300000, guid: c6b5823bd289f014294c04646dff47f0, type: 3}
+  - name: explode
+    audios:
+    - {fileID: 8300000, guid: 620a546cd220e874596ee611bca8c20f, type: 3}
+  - name: exist
+    audios:
+    - {fileID: 8300000, guid: 71a33e9667e555440ac0c67507be68c1, type: 3}
   bgmSource: {fileID: 1632380529}
   sfxSource: {fileID: 408371817}
   BGMvolume: 0
