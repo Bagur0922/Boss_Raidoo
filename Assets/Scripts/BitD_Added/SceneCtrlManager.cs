@@ -18,6 +18,7 @@ public class SceneCtrlManager : MonoBehaviour
     [SerializeField] float loadingTime = 1f;
     [SerializeField] float loadingWaitTime = 3f;
     [SerializeField] Animator loadingAnim;
+    [System.NonSerialized] public int deadCnt = 0;
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class SceneCtrlManager : MonoBehaviour
     }
     IEnumerator LoadSceneWithLoading()
     {
+        deadCnt = 0;
         loadingAnim.speed = 1 / loadingTime;
         loadingAnim.SetTrigger("ImageOn");
         yield return new WaitForSeconds(loadingTime + loadingWaitTime);

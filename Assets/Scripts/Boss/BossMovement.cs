@@ -94,11 +94,12 @@ public partial class BossMovement : MonoBehaviour
         if (stopUpdate) 
             return;
 
+        look();
+
         if (hp <= 0)
         {
             anim.SetTrigger("die");
-            Destroy(this);
-            playerMovement.ClearGame();
+            Destroy(hitBoxCol.gameObject);
             isDead = true;
             return;
         }
@@ -110,7 +111,6 @@ public partial class BossMovement : MonoBehaviour
         distance = player.transform.position.x - gameObject.transform.position.x;
         walk();
         value();
-        look();
         skill();
     }
     void value()
@@ -378,5 +378,9 @@ public partial class BossMovement : MonoBehaviour
     void ForceOff()
     {
         anim.SetBool("Force", false);
+    }
+    public void AniCallClear()
+    {
+        playerMovement.ClearGame();
     }
 }

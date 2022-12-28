@@ -74,11 +74,11 @@ public partial class BossMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // 가장 큰 원기옥 소환
-        CameraShake.I.DoShake(3f);
+        CameraShake.I.DoShake(2.7f);
         GameObject big = Instantiate(prefab_Lighting_Big);
         big.transform.position = ConstantValue.lighting_big_origin_pos;
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.7f);
 
         sr.enabled = false;
         Vector3 BigcalcEndPos = new Vector3(

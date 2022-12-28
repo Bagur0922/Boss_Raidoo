@@ -532,7 +532,7 @@ MonoBehaviour:
   - name: thunder_fire
     audios:
     - {fileID: 8300000, guid: 2dde2946dac6c3b4e8ea8a8e8434bf11, type: 3}
-  - name: thuder_end
+  - name: thunder_end
     audios:
     - {fileID: 8300000, guid: 94fa6392839fa6f498395eba52476f9b, type: 3}
   - name: voice

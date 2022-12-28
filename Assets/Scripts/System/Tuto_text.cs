@@ -17,6 +17,7 @@ public class Tuto_text : MonoBehaviour
 {
     [SerializeField] Animator cvgAnim;
     [SerializeField] TextMeshProUGUI tm;
+    [SerializeField] PlayerMovement playerM;
     [SerializeField] List<string> tutosaying;
     [SerializeField] List<GameObject> extras;
     CheckBox[] layout1 = new CheckBox[3];
@@ -33,6 +34,8 @@ public class Tuto_text : MonoBehaviour
     int curRollCnt = 0;
     [SerializeField] int needAtkCnt = 3;
     int curAtkCnt = 0;
+
+    bool locked = false;
 
     void Start()
     {
@@ -62,9 +65,11 @@ public class Tuto_text : MonoBehaviour
             }
             timeCheck = false;
         }
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && !locked)
         {
+            locked = true;
             SceneCtrlManager.ins.LoadScene(eScene.Game, true);
+            playerM.enabled = false;
         }
         cvgAnim.speed = 1 / fadeDelay;
     }
