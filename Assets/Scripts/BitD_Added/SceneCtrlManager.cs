@@ -18,6 +18,7 @@ public class SceneCtrlManager : MonoBehaviour
     [SerializeField] float loadingTime = 1f;
     [SerializeField] float loadingWaitTime = 3f;
     [SerializeField] Animator loadingAnim;
+    [System.NonSerialized] public int deadCnt = 0;
 
     private void Awake()
     {
@@ -26,19 +27,19 @@ public class SceneCtrlManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void LoadScene(eScene es)
+    public void LoadScene(eScene es, bool needLoading = false)
     {
-        if (es == eScene.Game) StartCoroutine(LoadSceneWithLoading());
+        if (es == eScene.Game && needLoading) StartCoroutine(LoadSceneWithLoading());
         else SceneManager.LoadScene(es.ToString());
     }
     IEnumerator LoadSceneWithLoading()
     {
+        deadCnt = 0;
         loadingAnim.speed = 1 / loadingTime;
         loadingAnim.SetTrigger("ImageOn");
-        yield return new WaitForSeconds(loadingTime);
-        loadingAnim.speed = 1 / loadingWaitTime;
+        yield return new WaitForSeconds(loadingTime + loadingWaitTime);
+        loadingAnim.speed = 1 / loadingTime;
         loadingAnim.SetTrigger("ImageOff");
-        yield return new WaitForSeconds(loadingWaitTime + 0.2f);
         SceneManager.LoadScene("Game");
     }
 

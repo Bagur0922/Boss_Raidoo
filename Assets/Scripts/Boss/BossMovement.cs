@@ -47,7 +47,8 @@ public partial class BossMovement : MonoBehaviour
     public bool ghosting = false;
     public bool direction = false;
     public bool counteren = true;
-    public bool specialSkillUsed = false;
+    public bool specialFirstSkillUsed = false;
+    public bool specialSecondSkillUsed = false;
     
     [SerializeField] public int[] cool; //1은 사용 가능, 0은 쿨타임중. 0은 벽력일섬, 1은 구르기
 
@@ -80,29 +81,47 @@ public partial class BossMovement : MonoBehaviour
         startg = true;
     }
 
-    // 깻잎 22-12-27
-    // 움직이는 TimeTick
-
     void Update()
     {
-        if (stopUpdate || isDead) return;
+
+        if (isDead)
+            return;
+
+        if (isForceMoveStart == true)
+        {
+            ForceMove();
+        }
+
+        if (stopUpdate)
+            return;
+        if (changedir)
+        {
+            look();
+        }
+        
+
         if (hp <= 0)
         {
             anim.SetTrigger("die");
-            Destroy(this);
-            playerMovement.ClearGame();
+            Destroy(hitBoxCol.gameObject);
             isDead = true;
             return;
         }
-        if (!specialSkillUsed && hp / maxHp <= 0.3f)
+        if (!specialFirstSkillUsed && hp / maxHp <= 0.6f)
         {
+            specialFirstSkillUsed = true;
+            SpecialSkillStart();
+            return;
+        }
+        else if(!specialSecondSkillUsed && hp / maxHp <= 0.3f)
+        {
+            specialFirstSkillUsed = false;
             SpecialSkillStart();
             return;
         }
         distance = player.transform.position.x - gameObject.transform.position.x;
         walk();
         value();
-        look();
         skill();
     }
     void value()
@@ -135,11 +154,13 @@ public partial class BossMovement : MonoBehaviour
     {
         if (distance > 0 && changedir)
         {
+            Debug.Log("look 오른쪽");
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             direction = true;
         }
         else if (changedir)
         {
+            Debug.Log("look 왼쪽");
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
             direction = false;
         }
@@ -207,7 +228,7 @@ public partial class BossMovement : MonoBehaviour
     {
         cool[2] = 0;
         anim.SetTrigger("attack");
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(2/3);
         StartCoroutine(cooldown(2, 2.5f));
         stop = false;
         if (downback)
@@ -307,8 +328,9 @@ public partial class BossMovement : MonoBehaviour
         stop = false;
         canWalk = true;
         ready = true;
-        damage = true;
         changedir = true;
+        cool[1] = 1;
+        StartCoroutine(roll());
         yield return null;
     }
     IEnumerator damaged()
@@ -370,5 +392,9 @@ public partial class BossMovement : MonoBehaviour
     void ForceOff()
     {
         anim.SetBool("Force", false);
+    }
+    public void AniCallClear()
+    {
+        playerMovement.ClearGame();
     }
 }

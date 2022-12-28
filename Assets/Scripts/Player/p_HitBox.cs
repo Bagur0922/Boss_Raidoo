@@ -34,6 +34,16 @@ public class p_HitBox : MonoBehaviour
                 hpUI.Damaged();
             }
         }
+        else if (other.GetComponent<LightingMove>() != null)
+        {
+            if (other.GetComponent<LightingMove>().attacking && playerMovement.damge && other.tag == "b_AttackBox")
+            {
+                StartCoroutine(playerMovement.damaged());
+                hpUI.Damaged();
+
+                Destroy(other.gameObject);
+            }
+        }
     }
     
 }

@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraShake : MonoBehaviour
+// ≤¢¿Ÿ 22-12-27
+// ΩÃ±€≈œ¿∏∑Œ ∫Ø∞Ê
+public class CameraShake : BehaviourSingleton<CameraShake>
 {
     [SerializeField] float m_force = 0f;
     [SerializeField] Vector3 m_offset = Vector3.zero;
@@ -13,11 +15,66 @@ public class CameraShake : MonoBehaviour
 
     Quaternion m_originRot;
     // Start is called before the first frame update
-    void Start()
+
+    public bool Shaking;
+    private float ShakeDecay;
+    private float ShakeIntensity;
+    private Vector3 OriginalPos;
+    private Quaternion OriginalRot;
+
+    /*void Start()
     {
+        // √ ±‚»≠
+        Shaking = true;
+
         m_originRot = transform.rotation;
+
+        OriginalPos = transform.position;
+        OriginalRot = transform.rotation;
+    }
+    public float shaketime = 0.0f;
+    public void DoShake(float time = 0.3f)
+    {
+        Debug.Log("DoShake ");
+
+        Shaking = true;
+        shaketime = time;
+
+        ShakeIntensity = ConstantValue.camera_shake_intensity;
     }
 
+    public void StopShake()
+    {
+        Debug.Log("StopShake ");
+
+        ShakeIntensity = 0f;
+        Shaking = false;
+    }
+
+    void Update()
+    {
+        if (shaketime <= 0f)
+        {
+            transform.position = OriginalPos;
+            transform.rotation = OriginalRot;
+
+            ShakeIntensity = 0f;
+            Shaking = false;
+            return;
+        }
+        else
+        {
+            transform.position = OriginalPos + Random.insideUnitSphere * ShakeIntensity;
+            transform.rotation = new Quaternion(OriginalRot.x + Random.Range(-ShakeIntensity, ShakeIntensity),
+                                                OriginalRot.y + Random.Range(-ShakeIntensity, ShakeIntensity),
+                                                OriginalRot.z + Random.Range(-ShakeIntensity, ShakeIntensity),
+                                                OriginalRot.w + Random.Range(-ShakeIntensity, ShakeIntensity));
+
+            shaketime -= Time.deltaTime;
+        }
+    }*/
+
+    
     // Update is called once per frame
     void Update()
     {
@@ -63,4 +120,5 @@ public class CameraShake : MonoBehaviour
             yield return null;
         }
     }
+    
 }

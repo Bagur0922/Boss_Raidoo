@@ -732,6 +732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cvgAnim: {fileID: 607946425}
   tm: {fileID: 379078693}
+  playerM: {fileID: 1251097958}
   tutosaying:
   - "\uBC29\uD5A5\uD0A4\uB85C \uC774\uB3D9"
   - "\uC2A4\uD398\uC774\uC2A4\uBC14\uB85C \uAD6C\uB974\uAE30"
@@ -1801,6 +1802,8 @@ MonoBehaviour:
   restartMessage: {fileID: 0}
   clearImage: {fileID: 0}
   clearTimeText: {fileID: 0}
+  sm: {fileID: 0}
+  deadClip: {fileID: 0}
   boss: {fileID: 1251097955}
   Camera: {fileID: 1425675413}
   speed: 7
@@ -2022,6 +2025,8 @@ MonoBehaviour:
   m_force: 0
   m_offset: {x: 0, y: 0, z: 0}
   shake: 0
+  Shaking: 0
+  shaketime: 0
 --- !u!1 &1428117476
 GameObject:
   m_ObjectHideFlags: 0
