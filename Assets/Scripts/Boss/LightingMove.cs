@@ -8,7 +8,7 @@ public class LightingMove : MonoBehaviour
 
     // Move Values
     public float movet = 0f;
-    public float moveSpeed = 1f;
+    public float moveSpeed = 1.5f;
     public Vector3 startPoint;
     public Vector3 endPoint;
 

@@ -17,6 +17,7 @@ public partial class BossMovement : MonoBehaviour
 
     [SerializeField] GameObject bar;
     [SerializeField] GameObject Dagger;
+    [SerializeField] GameObject fake;
     [SerializeField] Transform daggerPoint;
     [SerializeField] BoxCollider2D hitBoxCol;
 
@@ -82,6 +83,7 @@ public partial class BossMovement : MonoBehaviour
         playerMovement.anyaction = true;
         playerMovement.counteranyaction = true;
         startg = true;
+        StartCoroutine(cooldown(3, 30f));
     }
 
     void Update()
@@ -170,7 +172,7 @@ public partial class BossMovement : MonoBehaviour
     }
     void skill()
     {
-        if (ready)
+        if (ready && startg)
         {
             if (transform.position.x < 0 && transform.position.x > -2 && cool[0] == 1
                 || transform.position.x > 0 && transform.position.x < 2 && cool[0] == 1)
@@ -186,6 +188,13 @@ public partial class BossMovement : MonoBehaviour
                 ready = false;
                 changedir = false;
                 StartCoroutine(roll());
+            }
+            else if (Mathf.Abs(distance) > 4 && cool[3] == 1)
+            {
+                canWalk = false;
+                ready = false;
+                changedir = false;
+                StartCoroutine(byuck());
             }
             else if(Mathf.Abs(distance) < 1.5f && cool[2] == 1)
             {
@@ -226,6 +235,33 @@ public partial class BossMovement : MonoBehaviour
             anim.SetBool("isWalking", false);
             rb.velocity = new Vector2(0, 0);
         }
+    }
+    IEnumerator byuck()
+    {
+        cool[3] = 0;
+        ready = false;
+        anim.SetTrigger("in_s");
+        yield return new WaitForSeconds(5 / 12);
+        var instance = Instantiate(fake);
+        if (player.GetComponent<PlayerMovement>().direction)
+        {
+            instance.transform.localScale = new Vector3(1.11f, 1.11f, 1);
+        }
+        else if (!player.GetComponent<PlayerMovement>().direction)
+        {
+            instance.transform.localScale = new Vector3(-1.11f, 1.11f, 1);
+        }
+        yield return new WaitWhile(() => instance != null);
+        anim.SetTrigger("in_f");
+        ready = true;
+        StartCoroutine(cooldown(3, 15f));
+        if (downback)
+        {
+            canWalk = true;
+            ready = true;
+            changedir = true;
+        }
+        yield return null;
     }
     IEnumerator nattack()
     {

@@ -289,6 +289,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isDead = true;
         SceneCtrlManager.ins.deadCnt++;
+        SceneCtrlManager.ins.SaveTime(sm.timer);
         anim.SetTrigger("Dead");
         if (deadClip != null) SoundPlayer.instance.startSFX(deadClip);
         StartCoroutine(Restart());
@@ -323,9 +324,10 @@ public class PlayerMovement : MonoBehaviour
     {
         isClear = true;
         clearImage.SetActive(true);
-        int tmpTime = Mathf.RoundToInt(sm.timer);
+        int tmpTime = Mathf.RoundToInt(SceneCtrlManager.ins.savedTimer);
         clearTimeText.text = string.Format("걸린 시간\n{0}분 {1}초\n\n죽은 횟수 : {2}번", tmpTime / 60, tmpTime % 60, SceneCtrlManager.ins.deadCnt);
         SceneCtrlManager.ins.deadCnt = 0;
+        SceneCtrlManager.ins.savedTimer = 0f;
         SoundPlayer.instance.init();
     }
 }

@@ -19,6 +19,7 @@ public class SceneCtrlManager : MonoBehaviour
     [SerializeField] float loadingWaitTime = 3f;
     [SerializeField] Animator loadingAnim;
     [System.NonSerialized] public int deadCnt = 0;
+    [System.NonSerialized] public float savedTimer = 0f;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class SceneCtrlManager : MonoBehaviour
     IEnumerator LoadSceneWithLoading()
     {
         deadCnt = 0;
+        savedTimer = 0f;
         loadingAnim.speed = 1 / loadingTime;
         loadingAnim.SetTrigger("ImageOn");
         yield return new WaitForSeconds(loadingTime + loadingWaitTime);
@@ -47,5 +49,9 @@ public class SceneCtrlManager : MonoBehaviour
     {
         SoundPlayer.instance.init();
         LoadScene(eScene.Game);
+    }
+    public void SaveTime(float timer)
+    {
+        savedTimer += timer;
     }
 }

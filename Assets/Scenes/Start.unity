@@ -565,6 +565,9 @@ MonoBehaviour:
   - name: exist
     audios:
     - {fileID: 8300000, guid: 71a33e9667e555440ac0c67507be68c1, type: 3}
+  - name: smoke
+    audios:
+    - {fileID: 8300000, guid: 77c2ac246a52a0046bf568a9e5c42651, type: 3}
   bgmSource: {fileID: 1632380529}
   sfxSource: {fileID: 408371817}
   BGMvolume: 0

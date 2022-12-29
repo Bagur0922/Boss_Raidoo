@@ -312,6 +312,7 @@ MonoBehaviour:
   Camera: {fileID: 1231143541}
   bar: {fileID: 1763704572}
   Dagger: {fileID: 4488137264829344064, guid: eb5d52dae9254a142bf120470d494f77, type: 3}
+  fake: {fileID: 7866279556999857448, guid: a1601beb382d3904199635889f5daffe, type: 3}
   daggerPoint: {fileID: 239959796}
   hitBoxCol: {fileID: 967789787}
   health: {fileID: 558610041}
@@ -330,7 +331,7 @@ MonoBehaviour:
   counteren: 1
   specialFirstSkillUsed: 0
   specialSecondSkillUsed: 0
-  cool: 010000000100000001000000
+  cool: 01000000010000000100000000000000
   movet: 0
   moveSpeed: 1
   startPoint: {x: 0, y: 0, z: 0}
@@ -2197,7 +2198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785616179}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
